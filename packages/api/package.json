@@ -37,17 +37,10 @@
       "pre-commit": "lint-staged"
     }
   },
-
-  
   "lint-staged": {
     "**/*.+(js|jsx|json|css|md|ts|tsx)": [
       "eslint --fix",
       "git add"
     ]
-     }    
-
-    
-
-
-
+     }   
 }
