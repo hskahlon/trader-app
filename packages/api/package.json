@@ -38,14 +38,11 @@
     }
   },
   "lint-staged": {
-    "src/**/*.+(js|jsx|json|css|md|ts|tsx)": [
+    "/**/*.+(js|jsx|json|css|md|ts|tsx)": [
       "eslint --fix",
       "git add"
     ]
-  }  
-
-
-  
+     }  
 
   
 }
