@@ -14,7 +14,11 @@ app.use(express.json())
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Hello Worlddddd!')
+})
+
+app.get('/test', (req, res) => {
+  res.send('testing')
 })
 
 app.use('/api', stockRouter)
