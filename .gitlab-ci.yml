@@ -1,0 +1,13 @@
+before_script:
+  - ./devops/tests/lockfiles.sh
+
+build_image:
+  stage: build
+  script:
+    - docker build -t ci-build:${CI_COMMIT_SHORT_SHA} -f devops/docker/Dockerfile .
+
+clean_up:
+  stage: .post
+  script:
+    - docker container prune -f
+    - docker image rm ci-build:${CI_COMMIT_SHORT_SHA}
