@@ -1,3 +1,6 @@
+/*
+  Currently not connected to database
+*/
 import {
   Avatar,
   Grid,
@@ -15,6 +18,11 @@ const comments_arr = [
   { user: "bob", str: "this is bob" },
   { user: "john", str: "this is john" },
 ];
+
+function useForceUpdate() {
+  const [value, setValue] = useState(0);
+  return () => setValue((value) => value + 1);
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,11 +56,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function useForceUpdate() {
-  const [value, setValue] = useState(0);
-  return () => setValue((value) => value + 1);
-}
-
 function Comments() {
   const classes = useStyles();
   const [user, setUser] = useState("");
@@ -62,9 +65,27 @@ function Comments() {
   const handleSubmit = (e) => {
     e.preventDefault();
     comments_arr.push({ user: user, str: comment });
-    forceUpdate;
     console.log({ user: user, str: comment });
+    forceUpdate();
   };
+
+  const displayComments = () => {
+    {
+      return comments_arr.map((comment) => (
+        <Paper className={classes.paper} key={comment}>
+          <Grid containter wrap="nowrap" spacing={2}>
+            <Grid item>
+              <Avatar>{comment.user}</Avatar>
+            </Grid>
+            <Grid item xs>
+              {comment.str}
+            </Grid>
+          </Grid>
+        </Paper>
+      ));
+    }
+  };
+
   return (
     <Container className={classes.comments}>
       <div>
@@ -76,18 +97,7 @@ function Comments() {
         >
           Comments
         </Typography>
-        {comments_arr.map((comment) => (
-          <Paper className={classes.paper} key={comment}>
-            <Grid containter wrap="nowrap" spacing={2}>
-              <Grid item>
-                <Avatar>{comment.user}</Avatar>
-              </Grid>
-              <Grid item xs>
-                {comment.str}
-              </Grid>
-            </Grid>
-          </Paper>
-        ))}
+        <div>{displayComments()}</div>
       </div>
       <Container className={classes.submit}>
         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
