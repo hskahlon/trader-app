@@ -18,5 +18,7 @@
         "react"
     ],
     "rules": {
+        "semi":"error",
+        "react/prop-types": 0
     }
 }

@@ -1,8 +1,21 @@
 import React from "react";
-import "./App.css";
+import { Container } from "@material-ui/core";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-function App() {
-  return <h1>Hello World!</h1>;
-}
+import Home from "./components/Home/Home";
+import Auth from "./components/Auth/Auth";
+
+const App = () => {
+  return (
+    <BrowserRouter>
+      <Container maxWidth="lg">
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/auth" exact component={Auth} />
+        </Switch>
+      </Container>
+    </BrowserRouter>
+  );
+};
 
 export default App;
