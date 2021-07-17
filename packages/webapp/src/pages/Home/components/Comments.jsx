@@ -14,7 +14,7 @@ import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
-const comments_arr = [
+const commentsArr = [
   { user: "bob", str: "this is bob" },
   { user: "john", str: "this is john" },
 ];
@@ -64,26 +64,24 @@ function Comments() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    comments_arr.push({ user: user, str: comment });
+    commentsArr.push({ user: user, str: comment });
     console.log({ user: user, str: comment });
     forceUpdate();
   };
 
   const displayComments = () => {
-    {
-      return comments_arr.map((comment) => (
-        <Paper className={classes.paper} key={comment}>
-          <Grid containter wrap="nowrap" spacing={2}>
-            <Grid item>
-              <Avatar>{comment.user}</Avatar>
-            </Grid>
-            <Grid item xs>
-              {comment.str}
-            </Grid>
+    return commentsArr.map((comment) => (
+      <Paper className={classes.paper} key={comment}>
+        <Grid containter wrap="nowrap" spacing={2}>
+          <Grid item>
+            <Avatar>{comment.user}</Avatar>
           </Grid>
-        </Paper>
-      ));
-    }
+          <Grid item xs>
+            {comment.str}
+          </Grid>
+        </Grid>
+      </Paper>
+    ));
   };
 
   return (

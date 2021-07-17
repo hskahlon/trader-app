@@ -1,5 +1,5 @@
 import React from "react";
-import Example from "./portfolio_chart";
+import Example from "./components/portfolio_chart";
 
 function Stocks() {
   return (
