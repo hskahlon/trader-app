@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { format, parseISO, subDays } from "date-fns";
-import { getDailyChartForSymbol } from "./api/apiConnect";
+import { getDailyChartForSymbol } from "../../../api/apiConnect";
 
 // function formatStockData(stockData) {
 //   // Convert stockData from an object to an array
