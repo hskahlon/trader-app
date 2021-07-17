@@ -7,8 +7,8 @@ import {
   CardMedia,
   Card,
 } from "@material-ui/core";
-import img2 from "../images/img2.jpg";
-import { Parallax, Background } from "react-parallax";
+import img2 from "../../Images/img2.jpg";
+import { Parallax } from "react-parallax";
 
 const useStyles = makeStyles((theme) => ({
   root: {
