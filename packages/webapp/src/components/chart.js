@@ -11,14 +11,14 @@ import {
 } from "recharts";
 import apiCall from "../api/apiConnect";
 
-let Symbol = "TSLA";
-let API_CALL = apiCall(Symbol);
+const Symbol = "TSLA";
+const API_CALL = apiCall(Symbol);
 
 export default function ChartTest() {
   let [data, setData] = useState([]);
-  let finaldata = [];
-  let calcXvals = [];
-  let calcYvals = [];
+  const finaldata = [];
+  const calcXvals = [];
+  const calcYvals = [];
   useEffect(() => {
     fetchData();
   }, []);
@@ -31,11 +31,11 @@ export default function ChartTest() {
       .then((data) => setData(data));
     console.log("finished fetching data");
   };
-  for (var key in data["Time Series (Daily)"]) {
+  for (const key in data["Time Series (Daily)"]) {
     calcXvals.push(key);
     calcYvals.push(data["Time Series (Daily)"][key]["1. open"]);
   }
-  for (var i = calcXvals.length; i > 0; i--) {
+  for (let i = calcXvals.length; i > 0; i--) {
     finaldata.push({
       date: calcXvals[i],
       value: calcYvals[i],

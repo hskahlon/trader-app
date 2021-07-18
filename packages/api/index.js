@@ -2,7 +2,8 @@ import express from 'express'
 import cors from 'cors'
 
 import db from './db/index.js'
-import stockRouter from './routes/stock.js'
+import stockRoutes from './routes/stock.js'
+import userRoutes from './routes/users.js'
 
 const app = express()
 const apiPort = 5000
@@ -21,6 +22,7 @@ app.get('/test', (req, res) => {
   res.send('testing')
 })
 
-app.use('/api', stockRouter)
+app.use('/stock', stockRoutes)
+app.use('/user', userRoutes)
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))

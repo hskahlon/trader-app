@@ -11,6 +11,7 @@ import {
 } from "recharts";
 // formating date
 import { format, parseISO, subDays } from "date-fns";
+import { getDailyChartForSymbol } from "../../../api/apiConnect";
 
 // Creating Data using Array
 
@@ -56,6 +57,7 @@ export default class Example extends PureComponent {
       stockYvalues: [],
     };
   }
+
   componentDidMount() {
     this.fetchStock();
   }
@@ -63,10 +65,10 @@ export default class Example extends PureComponent {
   fetchStock() {
     const pointerToThis = this;
     const API_KEY = "DXKIK94IXVCT2Q7Q";
-    let Symbol = document.getElementById("Stock").innerHTML;
-    let API_CALL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${Symbol}&outputsize=compact&apikey=${API_KEY}`;
-    let calcChart_XVals = [];
-    let calcChart_YVals = [];
+    const Symbol = document.getElementById("Stock").innerHTML;
+    const API_CALL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${Symbol}&outputsize=compact&apikey=${API_KEY}`;
+    const calcChartXVals = [];
+    const calcChartYVals = [];
     fetch(API_CALL)
       .then(function (response) {
         return response.json();
@@ -74,18 +76,19 @@ export default class Example extends PureComponent {
       .then(function (data) {
         // console.log(data["Time Series (Daily)"]["2021-02-24"]);
         // console.log(new Date("2021-02-24").toISOString());
-        for (var key in data["Time Series (Daily)"]) {
+        for (const key in data["Time Series (Daily)"]) {
           finaldata.push({
             date: calcChart_XVals.push(new Date(key).toISOString()),
             value: data["Time Series (Daily)"][key]["1. open"],
           });
         }
         pointerToThis.setState({
-          stockXvalues: calcChart_XVals,
-          stockYvalues: calcChart_YVals,
+          stockXvalues: calcChartXVals,
+          stockYvalues: calcChartYVals,
         });
       });
   }
+
   render() {
     return (
       <ResponsiveContainer width="100%" height={400}>

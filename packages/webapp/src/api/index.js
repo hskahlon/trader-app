@@ -1,21 +1,20 @@
 import axios from "axios";
 
-const api = axios.create({
-  baseURL: "http://localhost:5000/api",
+const API = axios.create({ baseURL: "http://localhost:5000" });
+
+API.interceptors.request.use((req) => {
+  if (localStorage.getItem("profile")) {
+    req.headers.Authorization = `Bearer ${
+      JSON.parse(localStorage.getItem("profile")).token
+    }`;
+  }
+
+  return req;
 });
 
-export const insertStock = (data) => api.post(`/stock`, data);
-export const getAllStocks = () => api.get(`/stocks`);
-export const updateStockById = (id, data) => api.put(`/stock/${id}`, data);
-export const deleteStockById = (id) => api.delete(`/stock/${id}`);
-export const getStockById = (id) => api.get(`/stock/${id}`);
+export const fetchStocks = () => API.get("/stock");
+export const createStock = (newStock) => API.post("/stock", newPost);
+export const deleteStock = (id) => API.delete(`/stock/${id}`);
 
-const apis = {
-  insertStock,
-  getAllStocks,
-  updateStockById,
-  deleteStockById,
-  getStockById,
-};
-
-export default apis;
+export const signIn = (formData) => API.post("/user/signin", formData);
+export const signUp = (formData) => API.post("/user/signup", formData);
