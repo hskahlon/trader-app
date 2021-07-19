@@ -23,6 +23,8 @@ app.use("/stock", stockRoutes);
 app.use("/user", userRoutes);
 
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../webapp/build", "index.html"));
+  res.sendFile(
+    path.resolve(path.dirname("./"), "../webapp/build", "index.html")
+  );
 });
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`));
