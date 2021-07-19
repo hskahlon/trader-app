@@ -24,8 +24,7 @@ const App = () => {
       <Container maxWidth="xl">
         <Navbar />
         <Switch>
-          {!user && <Redirect from="/" to="/auth" />}
-          <Route path="/" exact component={Home} />
+          <Route path="/" exact component={!user ? Auth : Home} />
           <Route path="/index.html" exact component={!user ? Auth : Home} />
           <Route path="/home" exact component={!user ? Auth : Home} />
           <Route path="/stocks" exact component={!user ? Auth : Stocks} />
