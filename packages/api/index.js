@@ -23,6 +23,4 @@ app.get("/", (req, res) => {
 app.use("/stock", stockRoutes);
 app.use("/user", userRoutes);
 
-app.listen(apiPort, "0.0.0.0", () =>
-  console.log(`Server running on port ${apiPort}`)
-);
+app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`));

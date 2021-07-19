@@ -6,11 +6,16 @@ services:
     image: trader-webapp:latest
     ports:
       - 80:3000
+    networks:
+      - trader-app
   api:
     build:
       context: packages/api
     image: trader-api:latest
     ports:
       - "5000:5000"
-volumes:
-  mongo-data:
+    networks:
+      - trader-app
+networks:
+  trader-app:
+    driver: bridge
