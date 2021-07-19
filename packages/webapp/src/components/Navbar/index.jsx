@@ -23,8 +23,6 @@ function Navbar() {
     dispatch({ type: actionType.LOGOUT });
 
     history.push("/auth");
-
-    updateUser("NULL");
     localStorage.clear();
   };
 

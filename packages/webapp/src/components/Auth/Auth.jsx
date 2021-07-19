@@ -68,7 +68,6 @@ const SignUp = () => {
       updateUser({ data: { result, token } });
       history.push("/");
     } catch (error) {
-      updateUser("NULL");
       console.log(error);
     }
   };
