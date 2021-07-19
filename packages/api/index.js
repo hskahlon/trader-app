@@ -13,6 +13,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.json());
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  if (req.method === "OPTION") {
+    res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,PATCH");
+    return res.status(200).json({});
+  }
+  next();
+});
+
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 app.get("/", (req, res) => {
