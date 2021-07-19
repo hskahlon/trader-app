@@ -12,9 +12,7 @@ export function useAuthUpdate() {
 }
 
 export default function AuthProvider({ children }) {
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("profile")))
-  );
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
   function updateUser(data) {
     setUser(data);
