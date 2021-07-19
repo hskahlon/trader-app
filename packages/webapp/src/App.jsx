@@ -10,18 +10,19 @@ import Stocks from "./pages/Stocks";
 import Trade from "./pages/Trade";
 import Profile from "./pages/Profile";
 import About from "./pages/About";
+import { useAuth } from "./contexts/authContext";
 
 const App = () => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const user = useAuth();
 
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("profile")));
-  });
+    console.log(user);
+  }, [user]);
 
   return (
     <HashRouter>
       <Container maxWidth="xl">
-        <Navbar user={user} setUser={setUser} />
+        <Navbar />
         <Switch>
           <Route path="/" exact component={!user ? Auth : Home} />
           <Route path="/index.html" exact component={!user ? Auth : Home} />

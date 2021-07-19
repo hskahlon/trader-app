@@ -9,16 +9,8 @@ services:
   api:
     build:
       context: packages/api
-    depends_on:
-      - mongo
     image: trader-api:latest
     ports:
       - "5000:5000"
-  mongo:
-    image: mongo
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
 volumes:
   mongo-data:

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
   Avatar,
@@ -17,6 +17,7 @@ import { signin, signup } from "../../actions/auth";
 import { AUTH } from "../../constants/actionTypes";
 import useStyles from "./styles";
 import Input from "./Input";
+import { useAuthUpdate } from "../../contexts/authContext";
 
 const initialState = {
   firstName: "",
@@ -32,9 +33,13 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
-
+  const updateUser = useAuthUpdate();
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => setShowPassword(!showPassword);
+
+  useEffect(() => {
+    console.log(form);
+  }, [form]);
 
   const switchMode = () => {
     setForm(initialState);
@@ -58,9 +63,10 @@ const SignUp = () => {
 
     try {
       dispatch({ type: AUTH, data: { result, token } });
-
+      updateUser({ data: { result, token } });
       history.push("/");
     } catch (error) {
+      updateUser("NULL");
       console.log(error);
     }
   };

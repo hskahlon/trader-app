@@ -4,12 +4,15 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as actionType from "../../constants/actionTypes";
 import decode from "jwt-decode";
+import { useAuth, useAuthUpdate } from "../../contexts/authContext";
 
-function Navbar({ user, setUser }) {
+function Navbar() {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
   const [tab, setTab] = React.useState("");
+  const user = useAuth();
+  const updateUser = useAuthUpdate();
 
   const handleChange = (event, value) => {
     setTab(value);
@@ -21,7 +24,8 @@ function Navbar({ user, setUser }) {
 
     history.push("/auth");
 
-    setUser(null);
+    updateUser("NULL");
+    localStorage.clear();
   };
 
   useEffect(() => {
@@ -33,7 +37,7 @@ function Navbar({ user, setUser }) {
       if (decodedToken.exp * 1000 < new Date().getTime()) logout();
     }
 
-    setUser(JSON.parse(localStorage.getItem("profile")));
+    updateUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
 
   return (
