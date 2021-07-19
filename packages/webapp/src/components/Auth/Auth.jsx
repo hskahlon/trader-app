@@ -52,9 +52,11 @@ const SignUp = () => {
 
     if (isSignup) {
       dispatch(signup(form, history));
+      updateUser(JSON.parse(localStorage.getItem("profile")));
       history.push("/");
     } else {
       dispatch(signin(form, history));
+      updateUser(JSON.parse(localStorage.getItem("profile")));
       history.push("/");
     }
   };
