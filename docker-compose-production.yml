@@ -1,0 +1,18 @@
+version: "3"
+services:
+  webapp:
+    image: trader-webapp-production
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+  api:
+    depends_on:
+      - mongo
+    image: trader-api-production
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+volumes:
+  mongo-data:
+    driver: local
