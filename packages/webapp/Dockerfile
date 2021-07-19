@@ -15,4 +15,4 @@ RUN npm ci
 # Bundle app source
 COPY . .
 
-RUN npm build
+RUN npm run build
