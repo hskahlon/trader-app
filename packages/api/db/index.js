@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 
 mongoose
-  .connect("mongodb://localhost:27017/traderapp", { useNewUrlParser: true })
+  .connect("mongodb+srv://username:username@cluster0.uzp2z.mongodb.net/", {
+    useNewUrlParser: true,
+  })
   .catch((e) => {
     console.error("Connection error", e.message);
   });
