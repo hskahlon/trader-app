@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container } from "@material-ui/core";
-import { HashRouter, Switch, Route } from "react-router-dom";
+import { HashRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import Auth from "./components/Auth/Auth";
 import Navbar from "./components/Navbar";
@@ -24,7 +24,7 @@ const App = () => {
       <Container maxWidth="xl">
         <Navbar />
         <Switch>
-          <Route path="/" exact component={!user ? Auth : Home} />
+          <Route path="/">{!user ? <Redirect to="/auth" /> : <Home />}</Route>
           <Route path="/index.html" exact component={!user ? Auth : Home} />
           <Route path="/home" exact component={!user ? Auth : Home} />
           <Route path="/stocks" exact component={!user ? Auth : Stocks} />
