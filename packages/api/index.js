@@ -15,16 +15,11 @@ app.use(express.json());
 
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-app.get("/api", (req, res) => {
+app.get("/", (req, res) => {
   res.json({ message: "hello from server" });
 });
 
 app.use("/stock", stockRoutes);
 app.use("/user", userRoutes);
 
-app.get("*", (req, res) => {
-  res.sendFile(
-    path.resolve(path.dirname("./"), "../webapp/build", "index.html")
-  );
-});
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`));
