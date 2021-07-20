@@ -10,13 +10,14 @@ import Stocks from "./pages/Stocks";
 import Trade from "./pages/Trade";
 import Profile from "./pages/Profile";
 import About from "./pages/About";
-import { useAuth } from "./contexts/authContext";
+import { useAuth, useAuthUpdate } from "./contexts/authContext";
 
 const App = () => {
   const user = useAuth();
+  const updateUser = useAuthUpdate();
 
   useEffect(() => {
-    console.log(user);
+    updateUser(JSON.parse(localStorage.getItem("profile")));
   }, [user]);
 
   return (
