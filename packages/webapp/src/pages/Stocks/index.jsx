@@ -2,7 +2,7 @@ import React from "react";
 import SelectStock from "./components/selectStock";
 import ChartTest from "./components/chart";
 import Comments from "./components/Comments";
-
+import CryptoList from "./components/CryptoList";
 function Stocks() {
   return (
     <div className="App">
@@ -13,6 +13,7 @@ function Stocks() {
       {/* <Example></Example> */}
       <h2>Currently the chart is working with Api Data</h2>
       <Comments />
+      <CryptoList></CryptoList>
     </div>
   );
 }
