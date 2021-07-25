@@ -9,32 +9,16 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+// formating date
 import { format, parseISO, subDays } from "date-fns";
 import { getDailyChartForSymbol } from "../../../api/apiConnect";
 
-// function formatStockData(stockData) {
-//   // Convert stockData from an object to an array
-//   return Object.entries(stockData).map((entries) => {
-//     const [date, priceData] = entries;
-
-//     return {
-//       date,
-//       open: Number(priceData["1. open"]),
-//       high: Number(priceData["2. high"]),
-//       low: Number(priceData["3. low"]),
-//       close: Number(priceData["4. close"]),
-//     };
-//   });
-// }
 // Creating Data using Array
-const data = [];
-for (let num = 30; num >= 0; num--) {
-  data.push({
-    date: subDays(new Date(), num).toISOString().substr(0, 10),
-    value: 1 + Math.random(),
-  });
-}
 
+const finaldata = [];
+export function getData() {
+  return 1;
+}
 function CustomTooltip({ active, payload, label }) {
   // active if hovering over it
   // payload is the data being hovered over
@@ -42,8 +26,9 @@ function CustomTooltip({ active, payload, label }) {
   if (active) {
     return (
       <div className="tooltip">
-        <h4>{format(parseISO(label), "eeee, d MMM, yyyy")}</h4>
-        <p>${payload[0].value.toFixed(2)} CAD</p>
+        <h4>label</h4>
+        {/* <h4>{format(parseISO(label), "eeee, d MMM, yyyy")}</h4> */}
+        {/* <p>${payload[0].value.toFixed(2)} CAD</p> */}
       </div>
     );
   }
@@ -65,10 +50,49 @@ function formatNumber() {
 }
 
 export default class Example extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      stockXvalues: [],
+      stockYvalues: [],
+    };
+  }
+
+  componentDidMount() {
+    this.fetchStock();
+  }
+
+  fetchStock() {
+    const pointerToThis = this;
+    const API_KEY = "DXKIK94IXVCT2Q7Q";
+    const Symbol = document.getElementById("Stock").innerHTML;
+    const API_CALL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${Symbol}&outputsize=compact&apikey=${API_KEY}`;
+    const calcChartXVals = [];
+    const calcChartYVals = [];
+    fetch(API_CALL)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        // console.log(data["Time Series (Daily)"]["2021-02-24"]);
+        // console.log(new Date("2021-02-24").toISOString());
+        for (const key in data["Time Series (Daily)"]) {
+          finaldata.push({
+            date: calcChart_XVals.push(new Date(key).toISOString()),
+            value: data["Time Series (Daily)"][key]["1. open"],
+          });
+        }
+        pointerToThis.setState({
+          stockXvalues: calcChartXVals,
+          stockYvalues: calcChartYVals,
+        });
+      });
+  }
+
   render() {
     return (
       <ResponsiveContainer width="100%" height={400}>
-        <AreaChart data={data}>
+        <AreaChart data={finaldata}>
           <defs>
             {/* Coloring */}
             <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">

@@ -1,19 +1,8 @@
-import axios from "axios";
 const API_KEY = "DXKIK94IXVCT2Q7Q";
-const apiConnect = axios.create({
-  baseURL: "https://www.alphavantage.co/query",
-});
 
-export const getDailyChartForSymbol = (symbol) => {
-  return axiosInstance.get("", {
-    params: {
-      // Fetch daily chart
-      function: "TIME_SERIES_DAILY",
-      symbol,
+function apiCall(Symbol) {
+  const API_CALL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${Symbol}&outputsize=compact&apikey=${API_KEY}`;
+  return API_CALL;
+}
 
-      apikey: API_KEY,
-    },
-  });
-};
-
-export default apiConnect;
+export default apiCall;
