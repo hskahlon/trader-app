@@ -1,6 +1,3 @@
-/*
-  Currently not connected to database
-*/
 import {
   Avatar,
   Grid,
@@ -11,18 +8,9 @@ import {
   TextField,
 } from "@material-ui/core";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-
-const commentsArr = [
-  { user: "bob", str: "this is bob" },
-  { user: "john", str: "this is john" },
-];
-
-function useForceUpdate() {
-  const [value, setValue] = useState(0);
-  return () => setValue((value) => value + 1);
-}
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,28 +48,55 @@ function Comments() {
   const classes = useStyles();
   const [user, setUser] = useState("");
   const [comment, setComment] = useState("");
-  const forceUpdate = useForceUpdate();
+  const [commentsArr, setComments] = useState(null);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/comment/getComments").then((res) => {
+      setComments(res.data);
+    });
+  }, ["http://localhost:5000/comment/getComments"]);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    commentsArr.push({ user: user, str: comment });
-    console.log({ user: user, str: comment });
-    forceUpdate();
+    axios
+      .post("http://localhost:5000/comment/addComment", {
+        name: user,
+        value: comment,
+      })
+      .then(
+        (res) => {
+          console.log(res);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   };
 
   const displayComments = () => {
-    return commentsArr.map((comment) => (
-      <Paper className={classes.paper} key={comment}>
-        <Grid containter wrap="nowrap" spacing={2}>
-          <Grid item>
-            <Avatar>{comment.user}</Avatar>
+    if (commentsArr) {
+      return commentsArr.map((comment) => (
+        <Paper className={classes.paper} key={comment}>
+          <Grid containter wrap="nowrap" spacing={2}>
+            <Grid item>
+              <Avatar>{comment.name}</Avatar>
+            </Grid>
+            <Grid item xs>
+              {comment.value}
+            </Grid>
           </Grid>
-          <Grid item xs>
-            {comment.str}
+        </Paper>
+      ));
+    } else {
+      return (
+        <Paper className={classes.paper}>
+          <Grid containter wrap="nowrap" spacing={2}>
+            <Grid item xs>
+              No Comments
+            </Grid>
           </Grid>
-        </Grid>
-      </Paper>
-    ));
+        </Paper>
+      );
+    }
   };
 
   return (
