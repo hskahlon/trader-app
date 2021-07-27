@@ -5,29 +5,28 @@
   float: left;
   padding-right: 24px;
   padding-left: 24px;
-
 }
 .allCardz {
-    flex: 1;
-    float: left;
+  flex: 1;
+  float: left;
 }
 .coin-search {
-    display: flex;
-    width:100%;
-    padding:20px;
-    padding-bottom: 20px;
-    box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+  display: flex;
+  width: 100%;
+  padding: 20px;
+  padding-bottom: 20px;
+  box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
 }
 .searchForm {
-    padding:20px;
-    padding-bottom: 24px;
+  padding: 20px;
+  padding-bottom: 24px;
 }
 
 .coin {
-    padding:1%;
-    padding-left:50px;
-    padding-bottom:10px;
-    align-content:center;
+  padding: 1%;
+  padding-left: 50px;
+  padding-bottom: 10px;
+  align-content: center;
 }
 /* 
 .coin h1 {
