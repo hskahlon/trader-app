@@ -42,11 +42,14 @@ const useStyles = makeStyles((theme) => ({
   submitBtn: {
     margin: `${theme.spacing(1)}px auto`,
   },
+  gridItem: {
+    margin: "10px",
+  },
 }));
 
 function Comments() {
   const classes = useStyles();
-  const [user, setUser] = useState("");
+  const user = JSON.parse(localStorage.getItem("profile"));
   const [comment, setComment] = useState("");
   const [commentsArr, setComments] = useState(null);
 
@@ -59,7 +62,7 @@ function Comments() {
   const handleSubmit = (e) => {
     axios
       .post("http://localhost:5000/comment/addComment", {
-        name: user,
+        name: user?.result.name,
         value: comment,
       })
       .then(
@@ -77,10 +80,13 @@ function Comments() {
       return commentsArr.map((comment) => (
         <Paper className={classes.paper} key={comment}>
           <Grid containter wrap="nowrap" spacing={2}>
-            <Grid item>
-              <Avatar>{comment.name}</Avatar>
+            <Grid item xs={2} className={classes.gridItem}>
+              <Avatar>{comment.name.charAt(0)}</Avatar>
             </Grid>
-            <Grid item xs>
+            <Grid item xs={2} className={classes.gridItem}>
+              <Typography className={classes.user}>{comment.name}</Typography>
+            </Grid>
+            <Grid item xs={12} className={classes.gridItem}>
               {comment.value}
             </Grid>
           </Grid>
@@ -100,44 +106,47 @@ function Comments() {
   };
 
   return (
-    <Container className={classes.comments}>
-      <div>
-        <Typography
-          className={classes.typography}
-          variant="h6"
-          color="textSecondary"
-          compoent="h2"
-        >
-          Comments
-        </Typography>
-        <div>{displayComments()}</div>
-      </div>
-      <Container className={classes.submit}>
-        <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-          <TextField
-            onChange={(e) => setUser(e.target.value)}
-            className={classes.nameField}
-            label="Name"
-            required
-          />
-          <TextField
-            onChange={(e) => setComment(e.target.value)}
-            label="Comment"
-            variant="outlined"
-            fullWidth
-            required
-          />
-          <Button
-            type="sumbit"
-            variant="containted"
-            endIcon={<KeyboardArrowRightIcon />}
-            className={classes.submitBtn}
+    <div className={classes.root}>
+      <Container className={classes.comments}>
+        <div>
+          <Typography
+            className={classes.typography}
+            variant="h6"
+            color="textSecondary"
+            compoent="h2"
           >
-            Submit
-          </Button>
-        </form>
+            Comments
+          </Typography>
+          <div>{displayComments()}</div>
+        </div>
+        <Container className={classes.submit}>
+          <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} className={classes.gridItem}>
+                <Avatar>{user?.result.name.charAt(0)}</Avatar>
+              </Grid>
+              <Grid item xs={12} className={classes.gridItem}>
+                <TextField
+                  onChange={(e) => setComment(e.target.value)}
+                  label="Comment"
+                  variant="outlined"
+                  fullWidth
+                  required
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="sumbit"
+              variant="containted"
+              endIcon={<KeyboardArrowRightIcon />}
+              className={classes.submitBtn}
+            >
+              Submit
+            </Button>
+          </form>
+        </Container>
       </Container>
-    </Container>
+    </div>
   );
 }
 
