@@ -1,11 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Card, ListGroup } from "react-bootstrap";
-import StockForm from "./Components/StockForm"
+/* eslint-disable react/no-unescaped-entities */
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import SearchApp from './SearchApp.jsx';
+
 function Trade() {
-  return (<div>
-    <h1>this is Trading page</h1>
-    <StockForm/>
-  </div>);
+  return (
+    <div className="App">
+      <SearchApp />
+    </div>
+  );
 }
 
 export default Trade;
