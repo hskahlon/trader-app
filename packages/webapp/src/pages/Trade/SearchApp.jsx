@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'
 import axios from 'axios';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField, Button, Card, makeStyles, CardActionArea, CardActions, CardContent, CardMedia, Typography } from '@material-ui/core';
@@ -115,6 +116,18 @@ const SearchApp = () => {
     // getPrice();
     // setResultList(null);
   }
+  const handleTradeClick = (ticker, selectedBuy) => {
+    // alert(ticker);
+    <Link to = {{
+      pathname: '/tradestock',
+      tradeProps: {
+        ticker: ticker,
+        buy: selectedBuy
+      }
+    }} >Buy </Link>
+    // Trade refers to buying or selling
+    // send the ticker and proceed to buystockpage
+  }
   const classes = useStyles();
   return (
     <div className="App">
@@ -141,12 +154,21 @@ const SearchApp = () => {
                   </CardContent>
                 </CardActionArea>
                 <CardActions>
-                  <Button size="small" color="primary" style={{ width: "50%" }}>
-                    Buy
-                  </Button>
-                  <Button size="small" color="primary" style={{ width: "50%" }}>
-                    Sell
-                  </Button>
+                  <Link to={{
+                    pathname: '/tradestock',
+                    tradeProps: {
+                      selectedTicker: item["1. symbol"],
+                      buy: true
+                    }
+                  }} >Buy</Link>
+                  <Link to={{
+                    pathname: '/tradestock',
+                    tradeProps: {
+                      selectedTicker: item["1. symbol"],
+                      buy: false
+                    }
+                  }} >Sell </Link>
+
                 </CardActions>
               </Card>
             </div>
