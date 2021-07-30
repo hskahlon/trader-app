@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Popup from 'reactjs-popup'
+import TradeStock from './components/TradeStock';
 import { TextField, Button, Card, makeStyles, CardActionArea, CardActions, CardContent, CardMedia, Typography } from '@material-ui/core';
-// import { Input, Card } from "antd"
 const API_KEY = 'JCD13LZ263E4JG1P';
 const API_BASE_URL = 'https://www.alphavantage.co/query';
 // Define Style for card
@@ -17,6 +17,12 @@ const useStyles = makeStyles({
 });
 
 const SearchApp = () => {
+  const modalState = {
+    "1. symbol": 'null',
+    "2. name": 'null',
+  }
+  const [openModal, setOpenModal] = useState(modalState);
+  const [modalVisible, setmodalVisible] = useState(false);
   const [input, setInput] = useState([]);
   const [stockMatch, setStockMatch] = useState([]);
   const [filteredMatch, setFilteredMatch] = useState([]);
@@ -97,6 +103,16 @@ const SearchApp = () => {
     manipulateArray();
   }, [stockMatch]);
 
+  // useEffect(() => {
+  //   const CreateCard = () => {
+  //     if (openModal) {
+
+  //     }
+
+  //   }
+  //   CreateCard();
+  // }, [openModal])
+
   const handleSearchStock = (e) => {
     const stockSymbolValue = e.target.value;
     setInput(stockSymbolValue);
@@ -128,20 +144,32 @@ const SearchApp = () => {
     // Trade refers to buying or selling
     // send the ticker and proceed to buystockpage
   }
+  const handleOpenModal = (e) => {
+    setOpenModal(e);
+    setmodalVisible(true);
+  }
   const classes = useStyles();
   return (
     <div className="App">
+      <br></br>
+      <br></br>
       <div className="search-bar">
         <form noValidate autoComplete="off">
-          <br></br>
           <TextField id="full-width-text-field" label="Enter Ticker" variant="outlined" onChange={handleSearchStock} style={{ width: "100%" }} />
-          <Button variant="contained" color="primary" onClick={handleSearchSubmission}> Search </Button>
+          {/* <Button variant="contained" color="primary" onClick={handleSearchSubmission}> Search </Button> */}
+          <div id = "modal-div">
+            {modalVisible && <TradeStock id ="modal-trade" closeModal={setmodalVisible} getTicker={openModal["1. symbol"]} setName={openModal["2. name"]} />}
+          </div>
+          <br></br>
           {stockMatch && stockMatch.map((item, index) => (
             <div key={index} style={{ marginLeft: "35%", marginTop: "5px" }}>
               {/* <Card style={{ width: "50%" }} title={`Ticker: ${item["1. symbol"]}`}>
                 name: {item["2. name"]}
 
               </Card> */}
+              {/* Conditionally Render Modal if openMOdal is true */}
+              {/* {openModal && <TradeStock closeModal={setOpenModal} getTicker={item["1. symbol"]} setName={item["2. name"]} />} */}
+              <br></br>
               <Card className={classes.root}>
                 <CardActionArea>
                   <CardContent>
@@ -154,21 +182,9 @@ const SearchApp = () => {
                   </CardContent>
                 </CardActionArea>
                 <CardActions>
-                  <Link to={{
-                    pathname: '/tradestock',
-                    tradeProps: {
-                      selectedTicker: item["1. symbol"],
-                      buy: true
-                    }
-                  }} >Buy</Link>
-                  <Link to={{
-                    pathname: '/tradestock',
-                    tradeProps: {
-                      selectedTicker: item["1. symbol"],
-                      buy: false
-                    }
-                  }} >Sell </Link>
-
+                  <Button size="small" variant="contained" color="primary" style={{ width: "100%" }} onClick={() => handleOpenModal(item) } >
+                    Trade
+                  </Button>
                 </CardActions>
               </Card>
             </div>
