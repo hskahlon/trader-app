@@ -1,7 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Card, ListGroup } from "react-bootstrap";
+/* eslint-disable react/no-unescaped-entities */
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import SearchApp from './SearchApp.jsx';
+
 function Trade() {
-  return <h1>this is Trading page</h1>;
+  return (
+    <div className="App">
+      <SearchApp />
+    </div>
+  );
 }
 
 export default Trade;
