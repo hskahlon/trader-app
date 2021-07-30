@@ -77,8 +77,8 @@ function Comments() {
 
   const displayComments = () => {
     if (commentsArr) {
-      return commentsArr.map((comment) => (
-        <Paper className={classes.paper} key={comment}>
+      return commentsArr.map((comment, index) => (
+        <Paper className={classes.paper} key={index}>
           <Grid containter wrap="nowrap" spacing={2}>
             <Grid item xs={2} className={classes.gridItem}>
               <Avatar>{comment.name.charAt(0)}</Avatar>

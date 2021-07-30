@@ -43,8 +43,8 @@ function Profolio() {
 
   const displayStocks = () => {
     if (stockArr) {
-      return stockArr.map((stock) => (
-        <Paper className={classes.paper} key={stock}>
+      return stockArr.map((stock, index) => (
+        <Paper className={classes.paper} key={index}>
           <Grid containter spacing={1}>
             <Grid item xs={3}>
               Ticker: {stock.name}
