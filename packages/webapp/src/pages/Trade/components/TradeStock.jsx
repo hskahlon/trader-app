@@ -23,6 +23,7 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
   const [price, setPrice] = useState([]);
   const [stockName, getName] = useState(setName);
   const [shareCount, setShareCount] = useState(0);
+  const [cost, setCost] = useState(0);
   useEffect(() => {
     const getPrice = () => {
       axios.get(`${API_BASE_URL}`, {
@@ -40,6 +41,14 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
     }
     getPrice();
   }, [ticker])
+
+  useEffect(() => {
+    const updateCost = () => {
+      const CurrentCost = price * shareCount;
+      setCost(CurrentCost)
+    }
+    updateCost();
+  }, [shareCount])
   // use style for card
   const classes = useStyles();
   const SellButton = withStyles({
@@ -72,7 +81,50 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
       textTransform: 'capitalize',
     },
   })(Button);
-
+  const CounterButton = withStyles({
+    root: {
+      background: "#ffffff",
+      borderRadius: 3,
+      border: 0,
+      height: 48,
+      color: 'black',
+      padding: '0 30px',
+      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      margin: '8px',
+    },
+    label: {
+      textTransform: 'capitalize',
+    },
+  })(Button);
+  const TriggerButton = withStyles({
+    root: {
+      background: "black",
+      borderRadius: 3,
+      border: 0,
+      height: 48,
+      color: 'white',
+      padding: '0 30px',
+      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    },
+    label: {
+      textTransform: 'capitalize',
+    },
+  })(Button);
+  const handleIncrementCount = (e) => {
+    const newCount = shareCount + 1
+    setShareCount(newCount);
+  }
+  const handleDecrementCount = (e) => {
+    let newCount = shareCount - 1
+    if (newCount <= 0) {
+      newCount = 0;
+    }
+    setShareCount(newCount);
+  }
+  const updateCost = (e) => {
+    const CurrentCost = price * shareCount;
+    setCost(CurrentCost)
+  }
   return (
     <div className="modalBackground">
       <div className="modalContainer">
@@ -103,6 +155,20 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
                   Price: ${price}
                 </Typography>
                 </Grid>
+                <Grid item>
+                  {/* Counter */}
+                      <Button variant="contained" onClick={() => handleDecrementCount(shareCount)}> - </Button>
+                      <CounterButton variant="contained">
+                    {shareCount}
+                      </CounterButton>
+                      <Button variant="contained" onClick={() => handleIncrementCount(shareCount)}> + </Button>
+                </Grid>
+                    <Grid item>
+                      {/* Counter */}
+                      <CounterButton variant="contained">
+                        ${cost}
+                      </CounterButton>
+                    </Grid>
                 </Grid>
               </CardContent>
             </CardActionArea>
