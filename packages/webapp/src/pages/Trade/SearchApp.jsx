@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'
+
 import axios from 'axios';
-import Popup from 'reactjs-popup'
+
 import TradeStock from './components/TradeStock';
-import { TextField, Button, Card, makeStyles, CardActionArea, CardActions, CardContent, CardMedia, Typography } from '@material-ui/core';
+import { TextField, Button, Card, makeStyles, CardActionArea, CardActions, CardContent, Typography } from '@material-ui/core';
 const API_KEY = 'JCD13LZ263E4JG1P';
 const API_BASE_URL = 'https://www.alphavantage.co/query';
 // Define Style for card
@@ -26,9 +26,8 @@ const SearchApp = () => {
   const [input, setInput] = useState([]);
   const [stockMatch, setStockMatch] = useState([]);
   const [filteredMatch, setFilteredMatch] = useState([]);
-  // const [price, setPrice] = useState([]);
   const [foundTicker, setfoundTicker] = useState(false);
-  // const [ticker, setTicker] = useState("Enter Ticker");
+
   useEffect(() => {
     const searchStock = () => {
       axios.get(`${API_BASE_URL}`, {
@@ -41,42 +40,8 @@ const SearchApp = () => {
         .then(json => {
           setStockMatch(json.data?.bestMatches);
           setfoundTicker(true);
-          // if (stockMatch && stockMatch[0] && stockMatch[0]['1. symbol']) {
-          //   alert("found stocks, setting price")
-          //   setfoundTicker(true);
-          //   setTicker(stockMatch[0]['1. symbol']);
-          //   getPrice();
-          // } else {
-          //   setfoundTicker(false);
-          //   setTicker("Enter Ticker");
-          // }
         })
     }
-    // const searchStock = (text) => {
-    //   const matches = stockMatch.filter((input) => {
-    //     const regex = new RegExp(`${text}`, "gi");
-    //     return stockMatch[stockMatch[0]['1. symbol']]match(regex)
-    //   })
-    // }
-
-    // const getPrice = () => {
-    //   if (foundTicker) {
-    //     axios.get(`${API_BASE_URL}`, {
-    //       params: {
-    //         function: 'GLOBAL_QUOTE',
-    //         symbol: ticker,
-    //         apikey: API_KEY
-    //       }
-    //     })
-    //       .then(json => {
-    //         if (json.data["Global Quote"] && json.data["Global Quote"]["05. price"]) {
-    //           setPrice(json.data["Global Quote"]["05. price"]);
-    //           alert(`price: ${price} ticker:${ticker}`);
-    //           document.getElementById("stock-ticker-name").innerHTML = price;
-    //         }
-    //       })
-    //   }
-    // }
 
     const timeOutId = setTimeout(() => {
       if (input) {
@@ -103,47 +68,13 @@ const SearchApp = () => {
     manipulateArray();
   }, [stockMatch]);
 
-  // useEffect(() => {
-  //   const CreateCard = () => {
-  //     if (openModal) {
-
-  //     }
-
-  //   }
-  //   CreateCard();
-  // }, [openModal])
-
   const handleSearchStock = (e) => {
     const stockSymbolValue = e.target.value;
     setInput(stockSymbolValue);
 
-    // if (foundTicker) {
-    //   setFormDetail();
-    // }
-
     console.log(input);
   }
-  // Here we set the price, and ticker name
-  // const setFormDetail = (e) => {
-  //   document.getElementById("enterstockticker").innerHTML = ticker;
-  // }
-  const handleSearchSubmission = (e) => {
-    e.preventDefault();
-    // getPrice();
-    // setResultList(null);
-  }
-  const handleTradeClick = (ticker, selectedBuy) => {
-    // alert(ticker);
-    <Link to = {{
-      pathname: '/tradestock',
-      tradeProps: {
-        ticker: ticker,
-        buy: selectedBuy
-      }
-    }} >Buy </Link>
-    // Trade refers to buying or selling
-    // send the ticker and proceed to buystockpage
-  }
+
   const handleOpenModal = (e) => {
     setOpenModal(e);
     setmodalVisible(true);
@@ -191,14 +122,7 @@ const SearchApp = () => {
           ))}
         </form>
       </div>
-      {/* <div className="price-info">
-        <h1 id="stock-cost">Cost:</h1>
-        <TextField id="outlined-basic" label="Price" variant="outlined" />
-      </div>
-      <div className="quantity-info">
-        <h1>Enter Number of Shares:</h1>
-        <TextField id="outlined-basic" label="Total Cost" variant="outlined" disabled />
-      </div> */}
+
     </div>
   );
 }
