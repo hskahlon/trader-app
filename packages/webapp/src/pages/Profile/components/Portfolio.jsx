@@ -7,8 +7,9 @@ import {
   Container,
   TextField,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +36,12 @@ function Profolio() {
     { name: "AMZN", quantity: 100, price: 23 },
     { name: "TSLA", quantity: 100, price: 23 },
   ];
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/user/getStocks?email=" + user?.result.email).then((res) => {
+      console.log(res.data)
+    });
+  }, ["http://localhost:5000/user/getStocks"]);
 
   const totalValue = stockArr.reduce(
     (sum, stock) => sum + stock.price * stock.quantity,
