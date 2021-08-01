@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import inventory from '../controllers/inventory'
+import inventory from '../controllers/inventory.js'
 
 const router = Router()
 

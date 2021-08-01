@@ -38,9 +38,11 @@ function Profolio() {
   ];
 
   useEffect(() => {
-    axios.get("http://localhost:5000/user/getStocks?email=" + user?.result.email).then((res) => {
-      console.log(res.data)
-    });
+    axios
+      .get("http://localhost:5000/user/getStocks?email=" + user?.result.email)
+      .then((res) => {
+        console.log(res.data);
+      });
   }, ["http://localhost:5000/user/getStocks"]);
 
   const totalValue = stockArr.reduce(
