@@ -10,7 +10,7 @@ import Stocks from "./pages/Stocks";
 import Trade from "./pages/Trade";
 import Profile from "./pages/Profile";
 import About from "./pages/About";
-
+import Research from "./pages/Research";
 const App = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
@@ -30,6 +30,7 @@ const App = () => {
           <Route path="/profile" exact component={!user ? Auth : Profile} />
           <Route path="/about" exact component={!user ? Auth : About} />
           <Route path="/auth" exact component={Auth} />
+          <Route path="/research" exact component={!user ? Auth : Research} />
         </Switch>
       </Container>
     </BrowserRouter>
