@@ -45,6 +45,7 @@ function Navbar({ user, setUser }) {
           <Tab label="Trade" value="trade" />
           <Tab label="Profile" value="profile" />
           <Tab label="About" value="about" />
+          <Tab label="Research" value="research" />
           <Tab label="Logout" value="logout" onClick={logout} />
         </Tabs>
       </AppBar>

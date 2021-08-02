@@ -39,19 +39,22 @@ const SearchApp = () => {
 
   useEffect(() => {
     const searchStock = () => {
-      axios
-        .get(`${API_BASE_URL}`, {
-          params: {
-            function: "SYMBOL_SEARCH",
-            keywords: input,
-            apikey: API_KEY,
-          },
+      axios.get(`${API_BASE_URL}`, {
+        params: {
+          function: 'SYMBOL_SEARCH',
+          keywords: input,
+          apikey: API_KEY
+        }
+      })
+        .then(json => {
+          if (json.data.Note !== undefined) {
+            alert("Slow down Trader, API limit hit retry in 1 minute");
+          } else {
+            setStockMatch(json.data?.bestMatches);
+            setfoundTicker(true);
+          }
         })
-        .then((json) => {
-          setStockMatch(json.data?.bestMatches);
-          setfoundTicker(true);
-        });
-    };
+    }
 
     const timeOutId = setTimeout(() => {
       if (input) {
