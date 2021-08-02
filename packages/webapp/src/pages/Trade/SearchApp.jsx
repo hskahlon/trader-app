@@ -38,8 +38,12 @@ const SearchApp = () => {
         }
       })
         .then(json => {
-          setStockMatch(json.data?.bestMatches);
-          setfoundTicker(true);
+          if (json.data.Note !== undefined) {
+            alert("Slow down Trader, API limit hit retry in 1 minute");
+          } else {
+            setStockMatch(json.data?.bestMatches);
+            setfoundTicker(true);
+          }
         })
     }
 

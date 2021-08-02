@@ -3,16 +3,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Research from './Research';
 
-import { TextField, Button, Card, makeStyles, CardActionArea, CardActions, CardContent, Typography, GridList } from '@material-ui/core';
+import { TextField, Button, Card, makeStyles, CardActionArea, CardActions, CardContent, Typography, Grid } from '@material-ui/core';
 const API_KEY = 'JCD13LZ263E4JG1P';
 const API_BASE_URL = 'https://www.alphavantage.co/query';
 // Define Style for card
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 140,
+    marginRight: 8,
+    marginLeft: 8,
   },
 });
 
@@ -38,8 +36,12 @@ const SearchApp = () => {
         }
       })
         .then(json => {
-          setStockMatch(json.data?.bestMatches);
-          setfoundTicker(true);
+          if (json.data.Note !== undefined) {
+            alert("Slow down Trader, API limit hit retry in 1 minute");
+          } else {
+            setStockMatch(json.data?.bestMatches);
+            setfoundTicker(true);
+          }
         })
     }
 
@@ -92,9 +94,10 @@ const SearchApp = () => {
             {modalVisible && <Research id="modal-trade" closeModal={setmodalVisible} getTicker={openModal["1. symbol"]} setName={openModal["2. name"]} />}
           </div>
           <br></br>
-          <GridList cols={4}>
+          {!modalVisible && <Grid container>
           {stockMatch && stockMatch.map((item, index) => (
-            <div key={index} style={{ marginLeft: "35%", marginTop: "5px" }}>
+            <Grid item key = {index} xs={4}>
+            <div key={index} >
               {/* <Card style={{ width: "50%" }} title={`Ticker: ${item["1. symbol"]}`}>
                 name: {item["2. name"]}
 
@@ -102,10 +105,9 @@ const SearchApp = () => {
               {/* Conditionally Render Modal if openMOdal is true */}
               {/* {openModal && <Research closeModal={setOpenModal} getTicker={item["1. symbol"]} setName={item["2. name"]} />} */}
               <br></br>
-
               <Card className={classes.root}>
                 <CardActionArea>
-                  <CardContent>
+                    <CardContent onClick={() => handleOpenModal(item)}>
                     <Typography gutterBottom variant="h5" component="h2">
                       {item["2. name"]}
                     </Typography>
@@ -115,14 +117,12 @@ const SearchApp = () => {
                   </CardContent>
                 </CardActionArea>
                 <CardActions>
-                  <Button size="small" variant="contained" color="primary" style={{ width: "100%" }} onClick={() => handleOpenModal(item)} >
-                    Research
-                  </Button>
                 </CardActions>
               </Card>
             </div>
+            </Grid>
           ))}
-        </GridList>
+          </Grid>}
         </form>
       </div>
 

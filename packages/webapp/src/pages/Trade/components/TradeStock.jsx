@@ -34,7 +34,11 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
         }
       })
         .then(json => {
-          setPrice(json.data["Global Quote"]["05. price"]);
+          if (json.data.Note !== undefined) {
+            alert("Slow down Trader, Api limit hit retry in 1 minute");
+          } else {
+            setPrice(json.data["Global Quote"]["05. price"]);
+          }
           // alert(`price: ${price} ticker:${ticker} `);
           // document.getElementById("stock-ticker-name").innerHTML = price;
         })
