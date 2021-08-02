@@ -53,9 +53,9 @@ export default function Research({ closeModal, getTicker, setName }) {
         }
       })
         .then(json => {
-          if (json.data.Note !== undefined) {
-            alert("Slow down Trader, Api limit hit retry in 1 minute");
-            setNewsVisible(true);
+          if (json.data.Description === undefined) {
+            alert("Sorry Trader :( This Stocks Data is Unavailable, Please Select NYSE/NASDAQ based Stocks");
+            window.location.href = "http://localhost:3000/research";
           } else {
             const newStats = {
               Description: json.data.Description,
