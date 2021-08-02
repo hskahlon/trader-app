@@ -10,11 +10,12 @@ import {
 } from "recharts";
 import apiCall from "../../../api/apiConnect";
 
-const Symbol = "TSLA";
-const API_CALL = apiCall(Symbol);
+// const Symbol = "TSLA";
+// const API_CALL = apiCall(Symbol);
 
-export default function ChartTest() {
+export default function Chart({ passedTicker }) {
   let [data, setData] = useState([]);
+  const [chartTicker, setChartTicker] = useState(passedTicker);
   const finaldata = [];
   const calcXvals = [];
   const calcYvals = [];
@@ -23,7 +24,7 @@ export default function ChartTest() {
   }, []);
   const fetchData = () => {
     console.log("fetching data");
-    fetch(API_CALL)
+    fetch(apiCall(chartTicker))
       .then(function (response) {
         return response.json();
       })
