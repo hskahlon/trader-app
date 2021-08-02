@@ -15,6 +15,7 @@
     "date-fns": "^2.22.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "finnhub": "^1.2.5",
     "formatchange": "^1.6.4",
     "jwt-decode": "^3.1.2",
     "linting": "^1.0.0",

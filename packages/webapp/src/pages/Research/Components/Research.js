@@ -8,6 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+
 const API_KEY = 'JCD13LZ263E4JG1P';
 const API_BASE_URL = 'https://www.alphavantage.co/query';
 // Define Style for card
@@ -23,17 +24,6 @@ const useStyles = makeStyles({
     height: 140,
   },
 });
-function createData(name, ratio, value, indicator) {
-  return { name, ratio, value, indicator };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 
 export default function Research({ closeModal, getTicker, setName }) {
   const defaultStats = {
@@ -52,6 +42,7 @@ export default function Research({ closeModal, getTicker, setName }) {
   const [stockName, getName] = useState(setName);
   const [shareCount, setShareCount] = useState(0);
   const [cost, setCost] = useState(0);
+  const [newsVisible, setNewsVisible] = useState(false);
   useEffect(() => {
     const getStats = () => {
       axios.get(`${API_BASE_URL}`, {
@@ -64,6 +55,7 @@ export default function Research({ closeModal, getTicker, setName }) {
         .then(json => {
           if (json.data.Note !== undefined) {
             alert("Slow down Trader, Api limit hit retry in 1 minute");
+            setNewsVisible(true);
           } else {
             const newStats = {
               Description: json.data.Description,
@@ -76,6 +68,7 @@ export default function Research({ closeModal, getTicker, setName }) {
 
             }
             setStats(newStats);
+            setNewsVisible(true);
             // PEGRatio > 1 indicates overvalued
           }
           // alert(`price: ${price} ticker:${ticker} `);
@@ -205,7 +198,7 @@ export default function Research({ closeModal, getTicker, setName }) {
                               <TableCell align="right">{stats.ForwardPE}</TableCell>
                             </TableRow>
                             <TableRow>
-                              <TableCell align="right">{"PE"}</TableCell>
+                              <TableCell align="right">{"PE Ratio"}</TableCell>
                               <TableCell align="right">{stats.PERatio}</TableCell>
                             </TableRow>
                             <TableRow>
@@ -240,6 +233,8 @@ export default function Research({ closeModal, getTicker, setName }) {
             </Card>
           </Grid>
         </div>
+      </div>
+      <div>
       </div>
     </div>
   )
