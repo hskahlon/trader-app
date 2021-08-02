@@ -65,26 +65,39 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
     updateCost();
   }, [shareCount]);
 
-  const handleSubmit = (e) => {
-    console.log({
-      stockName: stockName,
-      ticker: ticker,
-      quantity: shareCount,
-      email: user?.result.name,
-      name: user?.result.name,
-    });
-
+  const handleBuy = (e) => {
     axios
       .post("http://localhost:5000/inventory/addInventory", {
         stockName: stockName,
         ticker: ticker,
         quantity: shareCount,
-        email: user?.result.name,
+        email: user?.result.email,
         name: user?.result.name,
       })
       .then(
         (res) => {
           console.log(res);
+          alert(res.data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  };
+
+  const handleSell = (e) => {
+    axios
+      .post("http://localhost:5000/inventory/sellInventory", {
+        stockName: stockName,
+        ticker: ticker,
+        quantity: shareCount,
+        email: user?.result.email,
+        name: user?.result.name,
+      })
+      .then(
+        (res) => {
+          console.log(res);
+          alert(res.data);
         },
         (error) => {
           console.log(error);
@@ -238,14 +251,19 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
               <CardActions></CardActions>
               <div className="footer">
                 <Button
-                  color="secondary"
-                  style={{ width: "100%" }}
-                  onClick={() => handleSubmit()}
+                  style={{ width: "100%", color: "green" }}
+                  onClick={() => handleBuy()}
                 >
                   BUY
                 </Button>
 
-                <SellButton>Sell</SellButton>
+                <Button
+                  style={{ width: "100%", color: "red" }}
+                  onClick={() => handleSell()}
+                >
+                  Sell
+                </Button>
+
                 <Button
                   size="small"
                   variant="contained"

@@ -30,39 +30,29 @@ const useStyles = makeStyles((theme) => ({
 function Profolio() {
   const classes = useStyles();
   const user = JSON.parse(localStorage.getItem("profile"));
-  const stockArr = [
-    { name: "AAPL", quantity: 100, price: 23 },
-    { name: "AMC", quantity: 100, price: 23 },
-    { name: "AMZN", quantity: 100, price: 23 },
-    { name: "TSLA", quantity: 100, price: 23 },
-  ];
+  const [stockArr, setStock] = useState(null);
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/user/getStocks?email=" + user?.result.email)
+      .post("http://localhost:5000/inventory/getInventory", {
+        email: user?.result.email,
+        name: user?.result.name,
+      })
       .then((res) => {
-        console.log(res.data);
+        setStock(res.data);
       });
-  }, ["http://localhost:5000/user/getStocks"]);
-
-  const totalValue = stockArr.reduce(
-    (sum, stock) => sum + stock.price * stock.quantity,
-    0
-  );
+  });
 
   const displayStocks = () => {
-    if (stockArr) {
+    if (stockArr !== null) {
       return stockArr.map((stock, index) => (
         <Paper className={classes.paper} key={index}>
           <Grid containter spacing={1}>
             <Grid item xs={3}>
-              Ticker: {stock.name}
+              Ticker: {stock.ticker}
             </Grid>
             <Grid item xs={3}>
               Owned: {stock.quantity}
-            </Grid>
-            <Grid item xs={3}>
-              Price: ${stock.price}
             </Grid>
           </Grid>
         </Paper>
@@ -82,9 +72,8 @@ function Profolio() {
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Typography variant="h5">Portfolio total: {totalValue}</Typography>
-          </Grid>
+          <Grid item xs={12}></Grid>
+          <Typography>Owned Stocks: </Typography>
           {displayStocks()}
         </Grid>
       </Paper>
