@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { TextField, Card, makeStyles, CardActionArea, CardContent, Typography, Grid } from '@material-ui/core';
 import Chart from './Chart';
-const API_KEY = 'R7C46JM3T0MGDFXB';
+const API_KEY = '5FCSO2LNUN72V90N';
 const API_BASE_URL = 'https://www.alphavantage.co/query';
 // Define Style for card
 const useStyles = makeStyles({
@@ -48,7 +48,7 @@ const SearchChart = () => {
       if (input) {
         searchStock();
       }
-    }, 1000);
+    }, 500);
 
     return () => {
       clearTimeout(timeOutId);

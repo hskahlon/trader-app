@@ -64,7 +64,7 @@ export default class Example extends PureComponent {
 
   fetchStock() {
     const pointerToThis = this;
-    const API_KEY = "DXKIK94IXVCT2Q7Q";
+    const API_KEY = "5FCSO2LNUN72V90N";
     const Symbol = document.getElementById("Stock").innerHTML;
     const API_CALL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${Symbol}&outputsize=compact&apikey=${API_KEY}`;
     const calcChartXVals = [];

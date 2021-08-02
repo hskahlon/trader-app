@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import TradeStock from './components/TradeStock';
 import { TextField, Button, Card, makeStyles, CardActionArea, CardActions, CardContent, Typography } from '@material-ui/core';
-const API_KEY = 'JCD13LZ263E4JG1P';
+const API_KEY = '5FCSO2LNUN72V90N';
 const API_BASE_URL = 'https://www.alphavantage.co/query';
 // Define Style for card
 const useStyles = makeStyles({

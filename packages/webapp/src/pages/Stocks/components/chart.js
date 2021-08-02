@@ -12,7 +12,7 @@ import apiCall from "../../../api/apiConnect";
 import axios from 'axios'
 import { Button } from '@material-ui/core';
 const API_BASE_URL = 'https://www.alphavantage.co/query'
-const API_KEY = 'DXKIK94IXVCT2Q7Q';
+const API_KEY = '5FCSO2LNUN72V90N';
 export default function Chart({ getTicker, setName, closeModal }) {
   const [data, setData] = useState([]);
   const [chartTicker, setChartTicker] = useState(getTicker);
@@ -44,7 +44,7 @@ export default function Chart({ getTicker, setName, closeModal }) {
     const setChartData = () => {
       if (data.Note !== undefined) {
         alert("Too many API requests for Charts, Try Writing some comments and come back in 1 minute :)")
-        window.location.href = "http://localhost:3000/stocks";
+        window.location.reload(true)
       }
       if (gotData) {
         setGotData(false);
@@ -83,8 +83,12 @@ export default function Chart({ getTicker, setName, closeModal }) {
   // data = finaldata;
   return (
     <div className="App">
-      <div className="Stock Title"><h1>{stockName}` Chart</h1>
-        <Button size="small" variant="contained" color="secondary" style={{ width: "100%" }} onClick={() => closeModal(false)}> Cancel </Button>
+      <div className="Stock Title"><h1>{stockName} Chart</h1>
+        <Button size="small" variant="outlined" color="secondary" style={{ width: "100%" }} onClick={() => window.location.reload(false) }> Close Chart </Button>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
     </div>
     <ResponsiveContainer width="100%" height={400}>
       <AreaChart data={finaldata}>

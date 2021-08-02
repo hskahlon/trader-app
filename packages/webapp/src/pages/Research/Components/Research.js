@@ -9,7 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-const API_KEY = 'JCD13LZ263E4JG1P';
+const API_KEY = '5FCSO2LNUN72V90N';
 const API_BASE_URL = 'https://www.alphavantage.co/query';
 // Define Style for card
 const useStyles = makeStyles({
@@ -228,7 +228,7 @@ export default function Research({ closeModal, getTicker, setName }) {
               <CardActions>
               </CardActions>
               <div className="footer">
-                <Button size="small" variant="contained" color="secondary" style={{ width: "100%" }} onClick={() => closeModal(false)}> Cancel </Button>
+                <Button size="small" variant="contained" color="secondary" style={{ width: "100%" }} onClick={() => window.location.reload(false) }> Cancel </Button>
               </div>
             </Card>
           </Grid>

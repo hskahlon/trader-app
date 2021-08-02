@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { withStyles, Grid, Button, Card, makeStyles, CardActionArea, CardActions, CardContent, Typography } from '@material-ui/core';
 
-const API_KEY = 'WUABTSBXYAJAVA8B';
+const API_KEY = '5FCSO2LNUN72V90N';
 const API_BASE_URL = 'https://www.alphavantage.co/query';
 // Define Style for card
 const useStyles = makeStyles({
@@ -24,36 +24,43 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
   const [stockName, getName] = useState(setName);
   const [shareCount, setShareCount] = useState(0);
   const [cost, setCost] = useState(0);
+  const [gotPrice, setGotPrice] = useState(false);
   useEffect(() => {
     const getPrice = () => {
-      axios.get(`${API_BASE_URL}`, {
-        params: {
-          function: 'GLOBAL_QUOTE',
-          symbol: ticker,
-          apikey: API_KEY
-        }
-      })
-        .then(json => {
-          if (json.data.Note !== undefined) {
-            alert("Slow down Trader, Api limit hit retry in 1 minute");
-          } else {
-            setPrice(json.data["Global Quote"]["05. price"]);
-            console.log("set price");
+      if (!gotPrice) {
+        axios.get(`${API_BASE_URL}`, {
+          params: {
+            function: 'GLOBAL_QUOTE',
+            symbol: ticker,
+            apikey: API_KEY
           }
-          // alert(`price: ${price} ticker:${ticker} `);
-          // document.getElementById("stock-ticker-name").innerHTML = price;
         })
+          .then(json => {
+            if (json.data.Note !== undefined) {
+              alert("Slow down Trader, Api limit hit retry in 1 minute");
+              closeModal(false);
+            } else {
+              setGotPrice(true);
+              setPrice(json.data["Global Quote"]["05. price"]);
+              console.log("set price");
+            }
+            // alert(`price: ${price} ticker:${ticker} `);
+            // document.getElementById("stock-ticker-name").innerHTML = price;
+          })
+      }
     }
     getPrice();
   }, [ticker])
 
   useEffect(() => {
-    const updateCost = () => {
-      const CurrentCost = price * shareCount;
-      setCost(CurrentCost)
-      console.log("update cost");
+    if (gotPrice) {
+      const updateCost = () => {
+        const CurrentCost = price * shareCount;
+        setCost(CurrentCost)
+        console.log("update cost");
+      }
+      updateCost();
     }
-    updateCost();
   }, [shareCount])
   // use style for card
   const classes = useStyles();
@@ -102,37 +109,28 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
       textTransform: 'capitalize',
     },
   })(Button);
-  const TriggerButton = withStyles({
-    root: {
-      background: "black",
-      borderRadius: 3,
-      border: 0,
-      height: 48,
-      color: 'white',
-      padding: '0 30px',
-      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    },
-    label: {
-      textTransform: 'capitalize',
-    },
-  })(Button);
+
   const handleIncrementCount = (e) => {
-    const newCount = shareCount + 1
-    setShareCount(newCount);
+    if (gotPrice) {
+      const newCount = shareCount + 1
+      setShareCount(newCount);
+    }
   }
   const handleDecrementCount = (e) => {
-    let newCount = shareCount - 1
-    if (newCount <= 0) {
-      newCount = 0;
+    if (gotPrice) {
+      let newCount = shareCount - 1
+      if (newCount <= 0) {
+        newCount = 0;
+      }
+      setShareCount(newCount);
     }
-    setShareCount(newCount);
   }
   return (
     <div className="modalBackground">
       <div className="modalContainer">
         <br></br>
         <div className="body" >
-          <Grid container direction="column" justify="center" alignItems="center" >
+          { gotPrice && <Grid container direction="column" justify="center" alignItems="center" >
           <Card className={classes.root} >
             <CardActionArea>
               <CardContent>
@@ -184,10 +182,10 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
                 <SellButton >
                   Sell
                 </SellButton>
-                <Button size="small" variant="contained" color="secondary" style={{ width: "100%" }} onClick={() => closeModal(false)}> Cancel </Button>
+                <Button size="small" variant="contained" color="secondary" style={{ width: "100%" }} onClick={() => window.location.reload(true)}> Cancel </Button>
               </div>
           </Card>
-          </Grid>
+          </Grid> }
         </div>
       </div>
     </div>
