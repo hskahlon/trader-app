@@ -5,6 +5,7 @@ import db from './db/index.js'
 import stockRoutes from './routes/stock.js'
 import userRoutes from './routes/users.js'
 import commentRoutes from './routes/comment.js'
+import inventoryRoutes from './routes/inventory.js'
 
 const app = express()
 const apiPort = 5000
@@ -26,5 +27,6 @@ app.get('/test', (req, res) => {
 app.use('/stock', stockRoutes)
 app.use('/user', userRoutes)
 app.use('/comment', commentRoutes)
+app.use('/inventory', inventoryRoutes)
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))

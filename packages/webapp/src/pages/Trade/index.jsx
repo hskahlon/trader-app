@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import SearchApp from './SearchApp.jsx';
+import SearchApp from "./SearchApp.jsx";
 
 function Trade() {
   return (
