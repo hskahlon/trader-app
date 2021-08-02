@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { TextField, Card, makeStyles, CardActionArea, CardContent, Typography, Grid } from '@material-ui/core';
 import Chart from './Chart';
-const API_KEY = 'JCD13LZ263E4JG1P';
+const API_KEY = 'R7C46JM3T0MGDFXB';
 const API_BASE_URL = 'https://www.alphavantage.co/query';
 // Define Style for card
 const useStyles = makeStyles({
@@ -25,8 +25,6 @@ const SearchChart = () => {
   const [modalVisible, setmodalVisible] = useState(false);
   const [input, setInput] = useState([]);
   const [stockMatch, setStockMatch] = useState([]);
-  const [filteredMatch, setFilteredMatch] = useState([]);
-  const [foundTicker, setfoundTicker] = useState(false);
 
   useEffect(() => {
     const searchStock = () => {
@@ -42,7 +40,6 @@ const SearchChart = () => {
             alert("Slow down Trader, API limit hit retry in 1 minute");
           } else {
             setStockMatch(json.data?.bestMatches);
-            setfoundTicker(true);
           }
         })
     }
@@ -51,7 +48,7 @@ const SearchChart = () => {
       if (input) {
         searchStock();
       }
-    }, 500);
+    }, 1000);
 
     return () => {
       clearTimeout(timeOutId);
@@ -66,6 +63,7 @@ const SearchChart = () => {
   }
 
   const handleOpenModal = (e) => {
+    console.log("open modal");
     setOpenModal(e);
     setmodalVisible(true);
   }

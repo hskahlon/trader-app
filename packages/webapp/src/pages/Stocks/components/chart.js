@@ -9,41 +9,79 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import apiCall from "../../../api/apiConnect";
+import axios from 'axios'
 import { Button } from '@material-ui/core';
+const API_BASE_URL = 'https://www.alphavantage.co/query'
+const API_KEY = 'DXKIK94IXVCT2Q7Q';
 export default function Chart({ getTicker, setName, closeModal }) {
-  let [data, setData] = useState([]);
+  const [data, setData] = useState([]);
   const [chartTicker, setChartTicker] = useState(getTicker);
   const [stockName, getName] = useState(setName);
-  const finaldata = [];
-  const calcXvals = [];
-  const calcYvals = [];
+  const [finaldata, setFinalData] = useState([]);
+  const [API_KEY, setAPIKey] = useState([]);
+  const [gotData, setGotData] = useState(false);
+  // const finaldata = [];
+  // const calcXvals = [];
+  // const calcYvals = [];;
   useEffect(() => {
     const fetchData = () => {
-      console.log("fetching data");
-      fetch(apiCall(chartTicker))
-        .then(function (response) {
-          return response.json();
-        })
-        .then((data) => setData(data));
-      console.log("finished fetching data");
+      if (!gotData) {
+        console.log("fetching data");
+        fetch(apiCall(chartTicker))
+          .then(function (response) {
+            return response.json();
+          })
+          .then((data) => setData(data));
+        console.log("finished fetching data");
+        setGotData(true);
+      }
     };
     fetchData();
   }, [chartTicker]);
+  useEffect(() => {
+    const calcXvals = [];
+    const calcYvals = [];
+    const chartData = [];
+    const setChartData = () => {
+      if (data.Note !== undefined) {
+        alert("Too many API requests for Charts, Try Writing some comments and come back in 1 minute :)")
+        window.location.href = "http://localhost:3000/stocks";
+      }
+      if (gotData) {
+        setGotData(false);
+        for (const key in data["Time Series (Daily)"]) {
+          calcXvals.push(key);
+          calcYvals.push(data["Time Series (Daily)"][key]["4. close"]);
+        }
+        for (let i = calcXvals.length; i > 0; i--) {
+          chartData.push({
+            date: calcXvals[i],
+            value: calcYvals[i],
+          });
+        }
+        setFinalData(chartData);
+        console.log("set final data");
+        console.log("hi")
+        console.log(data);
+      }
+    }
+    setChartData();
+  }, [data])
 
-  for (const key in data["Time Series (Daily)"]) {
-    calcXvals.push(key);
-    calcYvals.push(data["Time Series (Daily)"][key]["1. open"]);
-  }
-  for (let i = calcXvals.length; i > 0; i--) {
-    finaldata.push({
-      date: calcXvals[i],
-      value: calcYvals[i],
-    });
-  }
+  // for (const key in data["Time Series (Daily)"]) {
+  //   calcXvals.push(key);
+  //   calcYvals.push(data["Time Series (Daily)"][key]["1. open"]);
+  // }
+  // for (let i = calcXvals.length; i > 0; i--) {
+  //   finaldata.push({
+  //     date: calcXvals[i],
+  //     value: calcYvals[i],
+  //   });
+  // }
 
-  console.log("finaldata");
-  console.log(finaldata);
-  data = finaldata;
+  // console.log("finaldata");
+  // console.log(finaldata);
+  // data = finaldata;
   return (
     <div className="App">
       <div className="Stock Title"><h1>{stockName}` Chart</h1>
