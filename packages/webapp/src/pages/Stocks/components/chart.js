@@ -18,7 +18,6 @@ export default function Chart({ getTicker, setName, closeModal }) {
   const [chartTicker, setChartTicker] = useState(getTicker);
   const [stockName, getName] = useState(setName);
   const [finaldata, setFinalData] = useState([]);
-  const [API_KEY, setAPIKey] = useState([]);
   const [gotData, setGotData] = useState(false);
   // const finaldata = [];
   // const calcXvals = [];
@@ -27,7 +26,7 @@ export default function Chart({ getTicker, setName, closeModal }) {
     const fetchData = () => {
       if (!gotData) {
         console.log("fetching data");
-        fetch(apiCall(chartTicker))
+        fetch(apiCall(chartTicker, API_KEY))
           .then(function (response) {
             return response.json();
           })

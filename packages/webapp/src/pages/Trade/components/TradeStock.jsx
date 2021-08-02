@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Badge, withStyles, Grid, TextField, Button, Card, makeStyles, CardActionArea, CardActions, CardContent, CardMedia, Typography } from '@material-ui/core';
+import { withStyles, Grid, Button, Card, makeStyles, CardActionArea, CardActions, CardContent, Typography } from '@material-ui/core';
 
 const API_KEY = 'WUABTSBXYAJAVA8B';
 const API_BASE_URL = 'https://www.alphavantage.co/query';
@@ -38,6 +38,7 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
             alert("Slow down Trader, Api limit hit retry in 1 minute");
           } else {
             setPrice(json.data["Global Quote"]["05. price"]);
+            console.log("set price");
           }
           // alert(`price: ${price} ticker:${ticker} `);
           // document.getElementById("stock-ticker-name").innerHTML = price;
@@ -50,6 +51,7 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
     const updateCost = () => {
       const CurrentCost = price * shareCount;
       setCost(CurrentCost)
+      console.log("update cost");
     }
     updateCost();
   }, [shareCount])
@@ -124,10 +126,6 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
       newCount = 0;
     }
     setShareCount(newCount);
-  }
-  const updateCost = (e) => {
-    const CurrentCost = price * shareCount;
-    setCost(CurrentCost)
   }
   return (
     <div className="modalBackground">

@@ -25,8 +25,6 @@ const SearchApp = () => {
   const [modalVisible, setmodalVisible] = useState(false);
   const [input, setInput] = useState([]);
   const [stockMatch, setStockMatch] = useState([]);
-  const [filteredMatch, setFilteredMatch] = useState([]);
-  const [foundTicker, setfoundTicker] = useState(false);
 
   useEffect(() => {
     const searchStock = () => {
@@ -42,7 +40,6 @@ const SearchApp = () => {
             alert("Slow down Trader, API limit hit retry in 1 minute");
           } else {
             setStockMatch(json.data?.bestMatches);
-            setfoundTicker(true);
           }
         })
     }
@@ -57,20 +54,6 @@ const SearchApp = () => {
       clearTimeout(timeOutId);
     }
   }, [input])
-  useEffect(() => {
-    const manipulateArray = () => {
-      const arrayOfTickers = [];
-      if (stockMatch) {
-        // filter out just the ticker of company
-        for (let i = 0; i < stockMatch.length; i++) {
-          arrayOfTickers.push(stockMatch[i]['1. symbol']);
-        }
-        setFilteredMatch(arrayOfTickers);
-        // alert(arrayOfTickers.length);
-      }
-    }
-    manipulateArray();
-  }, [stockMatch]);
 
   const handleSearchStock = (e) => {
     const stockSymbolValue = e.target.value;
@@ -90,7 +73,7 @@ const SearchApp = () => {
       <br></br>
       <div className="search-bar">
         <form noValidate autoComplete="off">
-          <TextField id="full-width-text-field" label="Enter Ticker" variant="outlined" onChange={handleSearchStock} style={{ width: "100%" }} />
+          {!modalVisible && <TextField id="full-width-text-field" label="Enter Ticker" variant="outlined" onChange={handleSearchStock} style={{ width: "100%" }} />}
           {/* <Button variant="contained" color="primary" onClick={handleSearchSubmission}> Search </Button> */}
           <div id = "modal-div">
             {modalVisible && <TradeStock id ="modal-trade" closeModal={setmodalVisible} getTicker={openModal["1. symbol"]} setName={openModal["2. name"]} />}
@@ -105,7 +88,7 @@ const SearchApp = () => {
               {/* Conditionally Render Modal if openMOdal is true */}
               {/* {openModal && <TradeStock closeModal={setOpenModal} getTicker={item["1. symbol"]} setName={item["2. name"]} />} */}
               <br></br>
-              <Card className={classes.root}>
+              {!modalVisible && <Card className={classes.root} onClick={() => handleOpenModal(item)}>
                 <CardActionArea>
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
@@ -116,12 +99,7 @@ const SearchApp = () => {
                     </Typography>
                   </CardContent>
                 </CardActionArea>
-                <CardActions>
-                  <Button size="small" variant="contained" color="primary" style={{ width: "100%" }} onClick={() => handleOpenModal(item) } >
-                    Trade
-                  </Button>
-                </CardActions>
-              </Card>
+              </Card>}
             </div>
           ))}
         </form>
