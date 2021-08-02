@@ -1,4 +1,4 @@
-import React, { useState, useEffect, PureComponent, Component } from "react";
+import React, { useState, useEffect } from "react";
 import {
   AreaChart,
   Area,
@@ -9,28 +9,27 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import apiCall from "../../../api/apiConnect";
-
-// const Symbol = "TSLA";
-// const API_CALL = apiCall(Symbol);
-
-export default function Chart({ passedTicker }) {
+import { Button } from '@material-ui/core';
+export default function Chart({ getTicker, setName, closeModal }) {
   let [data, setData] = useState([]);
-  const [chartTicker, setChartTicker] = useState(passedTicker);
+  const [chartTicker, setChartTicker] = useState(getTicker);
+  const [stockName, getName] = useState(setName);
   const finaldata = [];
   const calcXvals = [];
   const calcYvals = [];
   useEffect(() => {
+    const fetchData = () => {
+      console.log("fetching data");
+      fetch(apiCall(chartTicker))
+        .then(function (response) {
+          return response.json();
+        })
+        .then((data) => setData(data));
+      console.log("finished fetching data");
+    };
     fetchData();
-  }, []);
-  const fetchData = () => {
-    console.log("fetching data");
-    fetch(apiCall(chartTicker))
-      .then(function (response) {
-        return response.json();
-      })
-      .then((data) => setData(data));
-    console.log("finished fetching data");
-  };
+  }, [chartTicker]);
+
   for (const key in data["Time Series (Daily)"]) {
     calcXvals.push(key);
     calcYvals.push(data["Time Series (Daily)"][key]["1. open"]);
@@ -46,6 +45,10 @@ export default function Chart({ passedTicker }) {
   console.log(finaldata);
   data = finaldata;
   return (
+    <div className="App">
+      <div className="Stock Title"><h1>{stockName}` Chart</h1>
+        <Button size="small" variant="contained" color="secondary" style={{ width: "100%" }} onClick={() => closeModal(false)}> Cancel </Button>
+    </div>
     <ResponsiveContainer width="100%" height={400}>
       <AreaChart data={finaldata}>
         <defs>
@@ -82,5 +85,6 @@ export default function Chart({ passedTicker }) {
         <CartesianGrid opacity={0.3} vertical={false} />
       </AreaChart>
     </ResponsiveContainer>
+    </div>
   );
 }
