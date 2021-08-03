@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import axios from 'axios';
+import axios from "axios";
 
 import TradeStock from './components/TradeStock';
 import { TextField, Button, Card, makeStyles, CardActionArea, CardActions, CardContent, Typography } from '@material-ui/core';
@@ -18,9 +18,9 @@ const useStyles = makeStyles({
 
 const SearchApp = () => {
   const modalState = {
-    "1. symbol": 'null',
-    "2. name": 'null',
-  }
+    "1. symbol": "null",
+    "2. name": "null",
+  };
   const [openModal, setOpenModal] = useState(modalState);
   const [modalVisible, setmodalVisible] = useState(false);
   const [input, setInput] = useState([]);
@@ -60,12 +60,12 @@ const SearchApp = () => {
     setInput(stockSymbolValue);
 
     console.log(input);
-  }
+  };
 
   const handleOpenModal = (e) => {
     setOpenModal(e);
     setmodalVisible(true);
-  }
+  };
   const classes = useStyles();
   return (
     <div className="App">
@@ -75,13 +75,21 @@ const SearchApp = () => {
         <form noValidate autoComplete="off">
           {!modalVisible && <TextField id="full-width-text-field" label="Enter Ticker" variant="outlined" onChange={handleSearchStock} style={{ width: "100%" }} />}
           {/* <Button variant="contained" color="primary" onClick={handleSearchSubmission}> Search </Button> */}
-          <div id = "modal-div">
-            {modalVisible && <TradeStock id ="modal-trade" closeModal={setmodalVisible} getTicker={openModal["1. symbol"]} setName={openModal["2. name"]} />}
+          <div id="modal-div">
+            {modalVisible && (
+              <TradeStock
+                id="modal-trade"
+                closeModal={setmodalVisible}
+                getTicker={openModal["1. symbol"]}
+                setName={openModal["2. name"]}
+              />
+            )}
           </div>
           <br></br>
-          {stockMatch && stockMatch.map((item, index) => (
-            <div key={index} style={{ marginLeft: "35%", marginTop: "5px" }}>
-              {/* <Card style={{ width: "50%" }} title={`Ticker: ${item["1. symbol"]}`}>
+          {stockMatch &&
+            stockMatch.map((item, index) => (
+              <div key={index} style={{ marginLeft: "35%", marginTop: "5px" }}>
+                {/* <Card style={{ width: "50%" }} title={`Ticker: ${item["1. symbol"]}`}>
                 name: {item["2. name"]}
 
               </Card> */}
@@ -101,12 +109,11 @@ const SearchApp = () => {
                 </CardActionArea>
               </Card>}
             </div>
-          ))}
+            ))}
         </form>
       </div>
-
     </div>
   );
-}
+};
 
 export default SearchApp;

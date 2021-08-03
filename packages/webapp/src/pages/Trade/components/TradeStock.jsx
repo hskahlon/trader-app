@@ -7,11 +7,11 @@ const API_BASE_URL = 'https://www.alphavantage.co/query';
 // Define Style for card
 const useStyles = makeStyles({
   root: {
-    background: '#0a2351',
+    background: "#0a2351",
     color: "white",
-    width: '80%',
+    width: "80%",
     border: 0,
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
   },
   media: {
     height: 140,
@@ -19,6 +19,7 @@ const useStyles = makeStyles({
 });
 
 export default function TradeStock({ closeModal, getTicker, setName }) {
+  const user = JSON.parse(localStorage.getItem("profile"));
   const [ticker, setTicker] = useState(getTicker);
   const [price, setPrice] = useState([]);
   const [stockName, getName] = useState(setName);
@@ -50,33 +51,71 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
       }
     }
     getPrice();
-  }, [ticker])
+  }, [ticker]);
 
   useEffect(() => {
-    if (gotPrice) {
-      const updateCost = () => {
-        const CurrentCost = price * shareCount;
-        setCost(CurrentCost)
-        console.log("update cost");
-      }
-      updateCost();
-    }
-  }, [shareCount])
+    const updateCost = () => {
+      const CurrentCost = price * shareCount;
+      setCost(CurrentCost);
+    };
+    updateCost();
+  }, [shareCount]);
+
+  const handleBuy = (e) => {
+    axios
+      .post("http://localhost:5000/inventory/addInventory", {
+        stockName: stockName,
+        ticker: ticker,
+        quantity: shareCount,
+        email: user?.result.email,
+        name: user?.result.name,
+      })
+      .then(
+        (res) => {
+          console.log(res);
+          alert(res.data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  };
+
+  const handleSell = (e) => {
+    axios
+      .post("http://localhost:5000/inventory/sellInventory", {
+        stockName: stockName,
+        ticker: ticker,
+        quantity: shareCount,
+        email: user?.result.email,
+        name: user?.result.name,
+      })
+      .then(
+        (res) => {
+          console.log(res);
+          alert(res.data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  };
+
   // use style for card
   const classes = useStyles();
   const SellButton = withStyles({
     root: {
-      background: '#fd5c63',
+      background: "#fd5c63",
       borderRadius: 3,
       border: 0,
-      color: 'white',
+      color: "white",
       width: "50%",
       height: 48,
-      padding: '0 30px',
-      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      padding: "0 30px",
+      boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
     },
     label: {
-      textTransform: 'capitalize',
+      textTransform: "capitalize",
     },
   })(Button);
   const BuyButton = withStyles({
@@ -84,14 +123,14 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
       background: "#32de84",
       borderRadius: 3,
       border: 0,
-      color: 'white',
+      color: "white",
       width: "50%",
       height: 48,
-      padding: '0 30px',
-      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      padding: "0 30px",
+      boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
     },
     label: {
-      textTransform: 'capitalize',
+      textTransform: "capitalize",
     },
   })(Button);
   const CounterButton = withStyles({
@@ -100,13 +139,13 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
       borderRadius: 3,
       border: 0,
       height: 48,
-      color: 'black',
-      padding: '0 30px',
-      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-      margin: '8px',
+      color: "black",
+      padding: "0 30px",
+      boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+      margin: "8px",
     },
     label: {
-      textTransform: 'capitalize',
+      textTransform: "capitalize",
     },
   })(Button);
 
@@ -140,47 +179,61 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
                         Trade Stock
                       </Typography>
                     </Grid>
-                  <Grid item>
-                <Typography gutterBottom variant="h5" component="h2">
-                  {`${stockName}`}
-                </Typography>
-                </Grid>
-                  <Grid item>
-                  <Typography gutterBottom variant="h5" component="h2">
-                  Ticker: ${ticker}
-                </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography gutterBottom variant="h5" component="h2">
-                  Price: ${price}
-                </Typography>
-                </Grid>
-                <Grid item>
-                  {/* Counter */}
-                      <Button variant="contained" onClick={() => handleDecrementCount(shareCount)}> - </Button>
-                      <CounterButton variant="contained">
-                    {shareCount}
-                      </CounterButton>
-                      <Button variant="contained" onClick={() => handleIncrementCount(shareCount)}> + </Button>
-                </Grid>
+                    <Grid item>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {`${stockName}`}
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        Ticker: ${ticker}
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        Price: ${price}
+                      </Typography>
+                    </Grid>
                     <Grid item>
                       {/* Counter */}
+                      <Button
+                        variant="contained"
+                        onClick={() => handleDecrementCount(shareCount)}
+                      >
+                        {" "}
+                        -{" "}
+                      </Button>
                       <CounterButton variant="contained">
-                        ${cost}
+                        {shareCount}
                       </CounterButton>
+                      <Button
+                        variant="contained"
+                        onClick={() => handleIncrementCount(shareCount)}
+                      >
+                        {" "}
+                        +{" "}
+                      </Button>
                     </Grid>
-                </Grid>
-              </CardContent>
-            </CardActionArea>
-            <CardActions>
-            </CardActions>
+                    <Grid item>
+                      {/* Counter */}
+                      <CounterButton variant="contained">${cost}</CounterButton>
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              </CardActionArea>
+              <CardActions></CardActions>
               <div className="footer">
-                <BuyButton >
+                <BuyButton
+                  style={{ width: "100%", color: "green" }}
+                  onClick={() => handleBuy()}
+                >
                   BUY
                 </BuyButton>
 
-                <SellButton >
-                  Sell
+                <SellButton
+                  style={{ width: "100%", color: "red" }}
+                  onClick={() => handleSell()}
+                >  Sell
                 </SellButton>
                 <Button size="small" variant="contained" color="secondary" style={{ width: "100%" }} onClick={() => window.location.reload(true)}> Cancel </Button>
               </div>
@@ -189,5 +242,5 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
