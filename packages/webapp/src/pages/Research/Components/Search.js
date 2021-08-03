@@ -4,7 +4,7 @@ import axios from 'axios';
 import Research from './Research';
 
 import { TextField, Button, Card, makeStyles, CardActionArea, CardActions, CardContent, Typography, Grid } from '@material-ui/core';
-const API_KEY = 'JCD13LZ263E4JG1P';
+const API_KEY = '5FCSO2LNUN72V90N';
 const API_BASE_URL = 'https://www.alphavantage.co/query';
 // Define Style for card
 const useStyles = makeStyles({
@@ -88,7 +88,7 @@ const SearchApp = () => {
       <br></br>
       <div className="search-bar">
         <form noValidate autoComplete="off">
-          <TextField id="full-width-text-field" label="Enter Ticker" variant="outlined" onChange={handleSearchStock} style={{ width: "100%" }} />
+          {!modalVisible && <TextField id="full-width-text-field" label="Enter Ticker" variant="outlined" onChange={handleSearchStock} style={{ width: "100%" }} /> }
           {/* <Button variant="contained" color="primary" onClick={handleSearchSubmission}> Search </Button> */}
           <div id="modal-div">
             {modalVisible && <Research id="modal-trade" closeModal={setmodalVisible} getTicker={openModal["1. symbol"]} setName={openModal["2. name"]} />}

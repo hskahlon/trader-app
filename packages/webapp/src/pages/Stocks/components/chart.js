@@ -1,4 +1,4 @@
-import React, { useState, useEffect, PureComponent, Component } from "react";
+import React, { useState, useEffect } from "react";
 import {
   AreaChart,
   Area,
@@ -9,42 +9,87 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import apiCall from "../../../api/apiConnect";
-
-const Symbol = "TSLA";
-const API_CALL = apiCall(Symbol);
-
-export default function ChartTest() {
-  let [data, setData] = useState([]);
-  const finaldata = [];
-  const calcXvals = [];
-  const calcYvals = [];
+import axios from 'axios'
+import { Button } from '@material-ui/core';
+const API_BASE_URL = 'https://www.alphavantage.co/query'
+const API_KEY = '5FCSO2LNUN72V90N';
+export default function Chart({ getTicker, setName, closeModal }) {
+  const [data, setData] = useState([]);
+  const [chartTicker, setChartTicker] = useState(getTicker);
+  const [stockName, getName] = useState(setName);
+  const [finaldata, setFinalData] = useState([]);
+  const [gotData, setGotData] = useState(false);
+  // const finaldata = [];
+  // const calcXvals = [];
+  // const calcYvals = [];;
   useEffect(() => {
+    const fetchData = () => {
+      if (!gotData) {
+        console.log("fetching data");
+        fetch(apiCall(chartTicker, API_KEY))
+          .then(function (response) {
+            return response.json();
+          })
+          .then((data) => setData(data));
+        console.log("finished fetching data");
+        setGotData(true);
+      }
+    };
     fetchData();
-  }, []);
-  const fetchData = () => {
-    console.log("fetching data");
-    fetch(API_CALL)
-      .then(function (response) {
-        return response.json();
-      })
-      .then((data) => setData(data));
-    console.log("finished fetching data");
-  };
-  for (const key in data["Time Series (Daily)"]) {
-    calcXvals.push(key);
-    calcYvals.push(data["Time Series (Daily)"][key]["1. open"]);
-  }
-  for (let i = calcXvals.length; i > 0; i--) {
-    finaldata.push({
-      date: calcXvals[i],
-      value: calcYvals[i],
-    });
-  }
+  }, [chartTicker]);
+  useEffect(() => {
+    const calcXvals = [];
+    const calcYvals = [];
+    const chartData = [];
+    const setChartData = () => {
+      if (data.Note !== undefined) {
+        alert("Too many API requests for Charts, Try Writing some comments and come back in 1 minute :)")
+        window.location.reload(true)
+      }
+      if (gotData) {
+        setGotData(false);
+        for (const key in data["Time Series (Daily)"]) {
+          calcXvals.push(key);
+          calcYvals.push(data["Time Series (Daily)"][key]["4. close"]);
+        }
+        for (let i = calcXvals.length; i > 0; i--) {
+          chartData.push({
+            date: calcXvals[i],
+            value: calcYvals[i],
+          });
+        }
+        setFinalData(chartData);
+        console.log("set final data");
+        console.log("hi")
+        console.log(data);
+      }
+    }
+    setChartData();
+  }, [data])
 
-  console.log("finaldata");
-  console.log(finaldata);
-  data = finaldata;
+  // for (const key in data["Time Series (Daily)"]) {
+  //   calcXvals.push(key);
+  //   calcYvals.push(data["Time Series (Daily)"][key]["1. open"]);
+  // }
+  // for (let i = calcXvals.length; i > 0; i--) {
+  //   finaldata.push({
+  //     date: calcXvals[i],
+  //     value: calcYvals[i],
+  //   });
+  // }
+
+  // console.log("finaldata");
+  // console.log(finaldata);
+  // data = finaldata;
   return (
+    <div className="App">
+      <div className="Stock Title"><h1>{stockName} Chart</h1>
+        <Button size="small" variant="outlined" color="secondary" style={{ width: "100%" }} onClick={() => window.location.reload(false) }> Close Chart </Button>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+    </div>
     <ResponsiveContainer width="100%" height={400}>
       <AreaChart data={finaldata}>
         <defs>
@@ -81,5 +126,6 @@ export default function ChartTest() {
         <CartesianGrid opacity={0.3} vertical={false} />
       </AreaChart>
     </ResponsiveContainer>
+    </div>
   );
 }
