@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import { TextField, Card, makeStyles, CardActionArea, CardContent, Typography, Grid } from '@material-ui/core';
-import Chart from './Chart';
+import Chart from './chart';
 const API_KEY = '5FCSO2LNUN72V90N';
 const API_BASE_URL = 'https://www.alphavantage.co/query';
 // Define Style for card
