@@ -51,62 +51,7 @@ function Home() {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            Etiam libero augue, bibendum quis tincidunt quis, luctus nec quam.
-            Aliquam venenatis pulvinar magna eget ultricies. Nunc metus nunc,
-            fermentum a dolor eu, egestas facilisis nunc. Donec quis ex
-            elementum, rutrum neque sit amet, bibendum tellus. Sed quis tortor
-            magna. Nunc dapibus orci eros, et finibus ligula efficitur eget.
-            Orci varius natoque penatibus et magnis dis parturient montes,
-            nascetur ridiculus mus. Sed mattis urna eu est iaculis rutrum. In
-            vestibulum auctor mi non scelerisque. Suspendisse purus ipsum,
-            rutrum nec malesuada eu, gravida at risus. Etiam dictum elit et
-            dapibus dignissim. Fusce vitae purus sed libero rutrum luctus. In
-            lobortis, enim in laoreet pharetra, metus sapien lobortis sem, eu
-            feugiat tellus neque in ex. Donec nec dictum massa. Etiam libero
-            augue, bibendum quis tincidunt quis, luctus nec quam. Aliquam
-            venenatis pulvinar magna eget ultricies. Nunc metus nunc, fermentum
-            a dolor eu, egestas facilisis nunc. Donec quis ex elementum, rutrum
-            neque sit amet, bibendum tellus. Sed quis tortor magna. Nunc dapibus
-            orci eros, et finibus ligula efficitur eget. Orci varius natoque
-            penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-            Sed mattis urna eu est iaculis rutrum. In vestibulum auctor mi non
-            scelerisque. Suspendisse purus ipsum, rutrum nec malesuada eu,
-            gravida at risus. Etiam dictum elit et dapibus dignissim. Fusce
-            vitae purus sed libero rutrum luctus. In lobortis, enim in laoreet
-            pharetra, metus sapien lobortis sem, eu feugiat tellus neque in ex.
-            Donec nec dictum massa.
-          </Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>
-            Etiam libero augue, bibendum quis tincidunt quis, luctus nec quam.
-            Aliquam venenatis pulvinar magna eget ultricies. Nunc metus nunc,
-            fermentum a dolor eu, egestas facilisis nunc. Donec quis ex
-            elementum, rutrum neque sit amet, bibendum tellus. Sed quis tortor
-            magna. Nunc dapibus orci eros, et finibus ligula efficitur eget.
-            Orci varius natoque penatibus et magnis dis parturient montes,
-            nascetur ridiculus mus. Sed mattis urna eu est iaculis rutrum. In
-            vestibulum auctor mi non scelerisque. Suspendisse purus ipsum,
-            rutrum nec malesuada eu, gravida at risus. Etiam dictum elit et
-            dapibus dignissim. Fusce vitae purus sed libero rutrum luctus. In
-            lobortis, enim in laoreet pharetra, metus sapien lobortis sem, eu
-            feugiat tellus neque in ex. Donec nec dictum massa.
-          </Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>
-            Etiam libero augue, bibendum quis tincidunt quis, luctus nec quam.
-            Aliquam venenatis pulvinar magna eget ultricies. Nunc metus nunc,
-            fermentum a dolor eu, egestas facilisis nunc. Donec quis ex
-            elementum, rutrum neque sit amet, bibendum tellus. Sed quis tortor
-            magna. Nunc dapibus orci eros, et finibus ligula efficitur eget.
-            Orci varius natoque penatibus et magnis dis parturient montes,
-            nascetur ridiculus mus. Sed mattis urna eu est iaculis rutrum. In
-            vestibulum auctor mi non scelerisque. Suspendisse purus ipsum,
-            rutrum nec malesuada eu, gravida at risus. Etiam dictum elit et
-            dapibus dignissim. Fusce vitae purus sed libero rutrum luctus. In
-            lobortis, enim in laoreet pharetra, metus sapien lobortis sem, eu
-            feugiat tellus neque in ex. Donec nec dictum massa.
+            <Typography>Welcome to our trading app.</Typography>
           </Paper>
         </Grid>
       </Grid>

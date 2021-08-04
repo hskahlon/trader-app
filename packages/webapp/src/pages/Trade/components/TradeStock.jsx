@@ -223,18 +223,18 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
               </CardActionArea>
               <CardActions></CardActions>
               <div className="footer">
-                <BuyButton
+                <Button
                   style={{ width: "100%", color: "green" }}
                   onClick={() => handleBuy()}
                 >
                   BUY
-                </BuyButton>
+                </Button>
 
-                <SellButton
+                <Button
                   style={{ width: "100%", color: "red" }}
                   onClick={() => handleSell()}
                 >  Sell
-                </SellButton>
+                </Button>
                 <Button size="small" variant="contained" color="secondary" style={{ width: "100%" }} onClick={() => window.location.reload(true)}> Cancel </Button>
               </div>
           </Card>
