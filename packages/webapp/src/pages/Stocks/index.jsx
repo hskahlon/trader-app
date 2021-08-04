@@ -1,10 +1,14 @@
 import React from "react";
 import Comments from "./components/Comments";
 import SearchChart from "./components/SearchChart"
+import Typography from '@material-ui/core/Typography';
 function Stocks() {
   return (
     <div className="App">
-      <h1> Stocks pages </h1>
+      <br></br>
+      <Typography variant="h2" align="center">
+        Charts Page
+      </Typography>
       <SearchChart />
 
       <Comments />

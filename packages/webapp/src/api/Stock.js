@@ -8,23 +8,25 @@ class Stock extends React.Component {
       stockYvalues: [],
     };
   }
+
   componentDidMount() {
     this.fetchStock();
   }
+
   fetchStock() {
     const pointerToThis = this;
     const API_KEY = "DXKIK94IXVCT2Q7Q";
-    let Symbol = "TSLA";
-    let API_CALL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${Symbol}&outputsize=compact&apikey=${API_KEY}`;
-    let calcChart_XVals = [];
-    let calcChart_YVals = [];
+    const Symbol = "TSLA";
+    const API_CALL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${Symbol}&outputsize=compact&apikey=${API_KEY}`;
+    const calcChart_XVals = [];
+    const calcChart_YVals = [];
     fetch(API_CALL)
       .then(function (response) {
         return response.json();
       })
       .then(function (data) {
         console.log(data);
-        for (var key in data["Time Series (Daily)"]) {
+        for (const key in data["Time Series (Daily)"]) {
           calcChart_XVals.push(key);
           calcChart_YVals.push(data["Time Series (Daily)"][key]["1. open"]);
         }
@@ -34,6 +36,7 @@ class Stock extends React.Component {
         });
       });
   }
+
   render() {
     return (
       <div>

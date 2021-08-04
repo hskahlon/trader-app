@@ -70,6 +70,9 @@ const SearchApp = () => {
   return (
     <div className="App">
       <br></br>
+      <Typography variant="h2" align="center">
+        Welcome to the Trading Floor
+      </Typography>
       <br></br>
       <div className="search-bar">
         <form noValidate autoComplete="off">

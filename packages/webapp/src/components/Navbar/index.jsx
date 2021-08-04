@@ -41,10 +41,9 @@ function Navbar({ user, setUser }) {
       <AppBar position="static">
         <Tabs value={tab} onChange={handleChange}>
           <Tab label="Home" value="home" />
-          <Tab label="Stocks" value="stocks" />
+          <Tab label="Charts" value="stocks" />
           <Tab label="Trade" value="trade" />
           <Tab label="Profile" value="profile" />
-          <Tab label="About" value="about" />
           <Tab label="Research" value="research" />
           <Tab label="Logout" value="logout" onClick={logout} />
         </Tabs>

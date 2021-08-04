@@ -1,9 +1,13 @@
 import React from 'react'
 import Search from './Components/Search'
+import { Typography } from '@material-ui/core';
 export default function index() {
   return (
     <div>
-      <h1>Research Stocks and Find Key Stats</h1>
+      <br></br>
+      <Typography variant="h2" align="center">
+        Research Center
+      </Typography>
       <Search />
     </div>
   )

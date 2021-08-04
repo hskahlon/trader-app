@@ -74,6 +74,7 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
         (res) => {
           console.log(res);
           alert(res.data);
+          window.location.reload(false);
         },
         (error) => {
           console.log(error);
@@ -94,6 +95,7 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
         (res) => {
           console.log(res);
           alert(res.data);
+          window.location.reload(false);
         },
         (error) => {
           console.log(error);
