@@ -1,11 +1,11 @@
-import { Router } from 'express'
+import { Router } from "express";
 
-import inventory from '../controllers/inventory.js'
+import inventory from "../controllers/inventory.js";
 
-const router = Router()
+const router = Router();
 
-router.post('/addInventory', inventory.addInventory)
-router.post('/sellInventory', inventory.sellInventory)
-router.post('/getInventory', inventory.getInventory)
+router.post("/addInventory", inventory.addInventory);
+router.post("/sellInventory", inventory.sellInventory);
+router.get("/getInventory", inventory.getInventory);
 
-export default router
+export default router;
