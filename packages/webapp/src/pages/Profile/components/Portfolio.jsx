@@ -41,7 +41,6 @@ function Profolio({ setTotalCurrValue, setTotalSpent, setTotalProfit }) {
       const res = await axios.post("http://localhost:5000/user/info", {
         email: user?.result.email,
       });
-      console.log(res.data);
       setTotalProfit(res.data.data.profit);
 
       const result = await axios.post(

@@ -68,8 +68,6 @@ const SearchApp = () => {
   const handleSearchStock = (e) => {
     const stockSymbolValue = e.target.value;
     setInput(stockSymbolValue);
-
-    console.log(input);
   };
 
   const handleOpenModal = (e) => {

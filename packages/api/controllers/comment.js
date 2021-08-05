@@ -10,7 +10,7 @@ const addComment = (req, res) => {
     if (err) {
       throw err;
     } else {
-      console.log("Comment Insert Successful");
+      res.send("Comment successful");
     }
   });
 };
