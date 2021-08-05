@@ -1,4 +1,5 @@
 import Inventory from "../models/inventory.js";
+import UserModal from "../models/user.js";
 
 const addInventory = async (req, res) => {
   const inventory = new Inventory({
@@ -19,7 +20,7 @@ const addInventory = async (req, res) => {
   };
 
   const oldInventory = await Inventory.find(query);
-  if (oldInventory.length != 0) {
+  if (oldInventory.length !== 0) {
     const newQuantity = req.body.quantity + oldInventory[0].quantity;
     Inventory.findByIdAndUpdate(
       { _id: oldInventory[0]._id },
@@ -38,7 +39,18 @@ const addInventory = async (req, res) => {
       }
     });
   }
-  res.send("Stock bought.");
+  const user = await UserModal.findOne({
+    email: req.body.email,
+  });
+  await UserModal.findOneAndUpdate(
+    {
+      email: req.body.email,
+    },
+    {
+      profit: user.profit - req.body.quantity * req.body.stockPrice,
+    }
+  );
+  res.send("Stock added");
 };
 
 const sellInventory = async (req, res) => {
@@ -54,7 +66,7 @@ const sellInventory = async (req, res) => {
     const newQuantity = oldInventory[0].quantity - req.body.quantity;
     if (newQuantity < 1) {
       Inventory.findByIdAndDelete(
-        oldInventory[0]._id,
+        { _id: oldInventory[0]._id },
         { useFindAndModify: false },
         function () {
           console.log("Stock deleted");
@@ -70,6 +82,17 @@ const sellInventory = async (req, res) => {
         }
       );
     }
+    const user = await UserModal.findOne({
+      email: req.body.email,
+    });
+    await UserModal.findOneAndUpdate(
+      {
+        email: req.body.email,
+      },
+      {
+        profit: user.profit + newQuantity * req.body.stockPrice,
+      }
+    );
     res.send("Stock sold.");
   } else {
     res.send("You don't own this stock.");

@@ -31,13 +31,19 @@ const useStyles = makeStyles((theme) => ({
 const API_KEY = "5FCSO2LNUN72V90N";
 const API_BASE_URL = "https://www.alphavantage.co/query";
 
-function Profolio({ setTotalCurrValue, setTotalSpent }) {
+function Profolio({ setTotalCurrValue, setTotalSpent, setTotalProfit }) {
   const classes = useStyles();
   const user = JSON.parse(localStorage.getItem("profile"));
   const [stockArr, setStock] = useState(null);
 
   useEffect(() => {
     const getStocks = async () => {
+      const res = await axios.post("http://localhost:5000/user/info", {
+        email: user?.result.email,
+      });
+      console.log(res.data);
+      setTotalProfit(res.data.data.profit);
+
       const result = await axios.post(
         "http://localhost:5000/inventory/getInventory",
         {

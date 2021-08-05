@@ -7,6 +7,7 @@ const userSchema = mongoose.Schema({
   id: { type: String },
   money: { type: Number },
   stocks: { type: Map },
+  profit: { type: Number, required: true },
 });
 
 export default mongoose.model("User", userSchema);

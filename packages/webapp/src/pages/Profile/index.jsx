@@ -24,16 +24,20 @@ function Profile() {
   const classes = useStyles();
   const [totalSpent, setTotalSpent] = useState(0);
   const [totalCurrValue, setTotalCurrValue] = useState(0);
-
+  const [totalProfit, setTotalProfit] = useState(0);
+  const [totalProfitCurrPort, setTotalProfitCurrPort] = useState(
+    totalCurrValue - totalSpent
+  );
   useEffect(() => {
-    console.log(totalCurrValue);
-  });
+    setTotalProfitCurrPort(totalCurrValue - totalSpent);
+  }, [totalSpent, totalCurrValue]);
   return (
     <>
       <User />
       <Profolio
         setTotalSpent={setTotalSpent}
         setTotalCurrValue={setTotalCurrValue}
+        setTotalProfit={setTotalProfit}
       />
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
@@ -47,8 +51,9 @@ function Profile() {
                 </Typography>
                 <Typography>
                   Total Profit On Current Portfolio:{" "}
-                  {totalCurrValue - totalSpent}
+                  {totalProfitCurrPort.toPrecision(4)}
                 </Typography>
+                <Typography>Total Profit: {totalProfit}</Typography>
               </Grid>
             </Grid>
           </Paper>

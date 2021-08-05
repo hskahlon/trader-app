@@ -98,6 +98,7 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
         stockName: stockName,
         ticker: ticker,
         quantity: shareCount,
+        stockPrice: price,
         email: user?.result.email,
         name: user?.result.name,
       })
