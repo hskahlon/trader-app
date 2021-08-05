@@ -16,7 +16,7 @@ const App = () => {
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("profile")));
-  });
+  }, []);
 
   return (
     <BrowserRouter>

@@ -12,9 +12,9 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-export const fetchStocks = () => API.get("/stock");
-export const createStock = (newStock) => API.post("/stock", newPost);
-export const deleteStock = (id) => API.delete(`/stock/${id}`);
+export const fetchStocks = () => API.get("/getInventory");
+export const createStock = (newStock) => API.post("/addInventory", newStock);
+export const sellStock = (sellStock) => API.post(`/sellInventory`, sellStock);
 
 export const signIn = (formData) => API.post("/user/signin", formData);
 export const signUp = (formData) => API.post("/user/signup", formData);

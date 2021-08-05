@@ -57,7 +57,7 @@ function Comments() {
     axios.get("http://localhost:5000/comment/getComments").then((res) => {
       setComments(res.data);
     });
-  }, ["http://localhost:5000/comment/getComments"]);
+  }, []);
 
   const handleSubmit = (e) => {
     axios

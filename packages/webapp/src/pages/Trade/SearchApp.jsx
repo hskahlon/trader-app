@@ -2,10 +2,19 @@ import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 
-import TradeStock from './components/TradeStock';
-import { TextField, Button, Card, makeStyles, CardActionArea, CardActions, CardContent, Typography } from '@material-ui/core';
-const API_KEY = '5FCSO2LNUN72V90N';
-const API_BASE_URL = 'https://www.alphavantage.co/query';
+import TradeStock from "./components/TradeStock";
+import {
+  TextField,
+  Button,
+  Card,
+  makeStyles,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  Typography,
+} from "@material-ui/core";
+const API_KEY = "5FCSO2LNUN72V90N";
+const API_BASE_URL = "https://www.alphavantage.co/query";
 // Define Style for card
 const useStyles = makeStyles({
   root: {
@@ -28,21 +37,22 @@ const SearchApp = () => {
 
   useEffect(() => {
     const searchStock = () => {
-      axios.get(`${API_BASE_URL}`, {
-        params: {
-          function: 'SYMBOL_SEARCH',
-          keywords: input,
-          apikey: API_KEY
-        }
-      })
-        .then(json => {
+      axios
+        .get(`${API_BASE_URL}`, {
+          params: {
+            function: "SYMBOL_SEARCH",
+            keywords: input,
+            apikey: API_KEY,
+          },
+        })
+        .then((json) => {
           if (json.data.Note !== undefined) {
             alert("Slow down Trader, API limit hit retry in 1 minute");
           } else {
             setStockMatch(json.data?.bestMatches);
           }
-        })
-    }
+        });
+    };
 
     const timeOutId = setTimeout(() => {
       if (input) {
@@ -52,18 +62,17 @@ const SearchApp = () => {
 
     return () => {
       clearTimeout(timeOutId);
-    }
-  }, [input])
+    };
+  }, [input]);
 
   const handleSearchStock = (e) => {
     const stockSymbolValue = e.target.value;
     setInput(stockSymbolValue);
-
-    console.log(input);
   };
 
   const handleOpenModal = (e) => {
     setOpenModal(e);
+    console.log(e);
     setmodalVisible(true);
   };
   const classes = useStyles();
@@ -76,7 +85,15 @@ const SearchApp = () => {
       <br></br>
       <div className="search-bar">
         <form noValidate autoComplete="off">
-          {!modalVisible && <TextField id="full-width-text-field" label="Enter Ticker" variant="outlined" onChange={handleSearchStock} style={{ width: "100%" }} />}
+          {!modalVisible && (
+            <TextField
+              id="full-width-text-field"
+              label="Enter Ticker"
+              variant="outlined"
+              onChange={handleSearchStock}
+              style={{ width: "100%" }}
+            />
+          )}
           {/* <Button variant="contained" color="primary" onClick={handleSearchSubmission}> Search </Button> */}
           <div id="modal-div">
             {modalVisible && (
@@ -96,22 +113,31 @@ const SearchApp = () => {
                 name: {item["2. name"]}
 
               </Card> */}
-              {/* Conditionally Render Modal if openMOdal is true */}
-              {/* {openModal && <TradeStock closeModal={setOpenModal} getTicker={item["1. symbol"]} setName={item["2. name"]} />} */}
-              <br></br>
-              {!modalVisible && <Card className={classes.root} onClick={() => handleOpenModal(item)}>
-                <CardActionArea>
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {item["2. name"]}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                      `Ticker: ${item["1. symbol"]}`
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>}
-            </div>
+                {/* Conditionally Render Modal if openMOdal is true */}
+                {/* {openModal && <TradeStock closeModal={setOpenModal} getTicker={item["1. symbol"]} setName={item["2. name"]} />} */}
+                <br></br>
+                {!modalVisible && (
+                  <Card
+                    className={classes.root}
+                    onClick={() => handleOpenModal(item)}
+                  >
+                    <CardActionArea>
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="h2">
+                          {item["2. name"]}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                          component="p"
+                        >
+                          `Ticker: ${item["1. symbol"]}`
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                )}
+              </div>
             ))}
         </form>
       </div>
