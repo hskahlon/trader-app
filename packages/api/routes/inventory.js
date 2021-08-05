@@ -6,6 +6,6 @@ const router = Router();
 
 router.post("/addInventory", inventory.addInventory);
 router.post("/sellInventory", inventory.sellInventory);
-router.get("/getInventory", inventory.getInventory);
+router.post("/getInventory", inventory.getInventory);
 
 export default router;

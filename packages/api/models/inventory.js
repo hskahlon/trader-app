@@ -6,6 +6,8 @@ const Inventory = new mongoose.Schema({
   quantity: { type: Number, required: true },
   email: { type: String, required: true },
   name: { type: String, required: true },
+  date: { type: Date, required: true },
+  stockPrice: { type: Number, required: true },
 });
 
 export default mongoose.model("inventory", Inventory);

@@ -7,6 +7,8 @@ const addInventory = async (req, res) => {
     quantity: req.body.quantity,
     email: req.body.email,
     name: req.body.name,
+    date: new Date(),
+    stockPrice: req.body.stockPrice,
   });
 
   const query = {
