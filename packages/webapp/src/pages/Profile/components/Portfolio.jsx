@@ -34,7 +34,7 @@ function Profolio() {
 
   useEffect(() => {
     axios
-      .post("http://localhost:5000/inventory/getInventory", {
+      .post("http://34.127.9.86:5000/inventory/getInventory", {
         email: user?.result.email,
         name: user?.result.name,
       })

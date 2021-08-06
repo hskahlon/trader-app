@@ -54,14 +54,14 @@ function Comments() {
   const [commentsArr, setComments] = useState(null);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/comment/getComments").then((res) => {
+    axios.get("http://34.127.9.86:5000/comment/getComments").then((res) => {
       setComments(res.data);
     });
-  }, ["http://localhost:5000/comment/getComments"]);
+  }, ["http://34.127.9.86:5000/comment/getComments"]);
 
   const handleSubmit = (e) => {
     axios
-      .post("http://localhost:5000/comment/addComment", {
+      .post("http://34.127.9.86:5000/comment/addComment", {
         name: user?.result.name,
         value: comment,
       })
