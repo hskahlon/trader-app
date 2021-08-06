@@ -57,7 +57,7 @@ function Comments() {
     axios.get("http://34.127.9.86:5000/comment/getComments").then((res) => {
       setComments(res.data);
     });
-  }, ["http://34.127.9.86:5000/comment/getComments"]);
+  }, []);
 
   const handleSubmit = (e) => {
     axios

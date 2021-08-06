@@ -56,8 +56,6 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
               setPrice(json.data["Global Quote"]["05. price"]);
               console.log("set price");
             }
-            // alert(`price: ${price} ticker:${ticker} `);
-            // document.getElementById("stock-ticker-name").innerHTML = price;
           });
       }
     };
@@ -80,6 +78,7 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
         quantity: shareCount,
         email: user?.result.email,
         name: user?.result.name,
+        stockPrice: price,
       })
       .then(
         (res) => {
@@ -99,12 +98,12 @@ export default function TradeStock({ closeModal, getTicker, setName }) {
         stockName: stockName,
         ticker: ticker,
         quantity: shareCount,
+        stockPrice: price,
         email: user?.result.email,
         name: user?.result.name,
       })
       .then(
         (res) => {
-          console.log(res);
           alert(res.data);
           window.location.reload(false);
         },

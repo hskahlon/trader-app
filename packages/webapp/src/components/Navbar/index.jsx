@@ -9,7 +9,7 @@ function Navbar({ user, setUser }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const [tab, setTab] = React.useState("");
+  const [tab, setTab] = React.useState(window.location.pathname);
 
   const handleChange = (event, value) => {
     setTab(value);

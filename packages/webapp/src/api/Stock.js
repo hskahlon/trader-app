@@ -25,7 +25,6 @@ class Stock extends React.Component {
         return response.json();
       })
       .then(function (data) {
-        console.log(data);
         for (const key in data["Time Series (Daily)"]) {
           calcChart_XVals.push(key);
           calcChart_YVals.push(data["Time Series (Daily)"][key]["1. open"]);
